@@ -17,7 +17,6 @@ bool canBeProfanity(std::string& word);
 bool doBinaryMasksMatch(int mask);
 int parseStringToMask(std::string& word);
 void readMaskCacheFile();
-void writeMaskCacheFile();
 void createCacheFile();
 time_t getProfanityListModificationTime();
 

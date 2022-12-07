@@ -1,14 +1,8 @@
 #include "Mask.hpp"
 
 std::vector<int> profanityMasks;
+
 bool canBeProfanity(std::string& word) {
-
-using namespace std;
-
-vector<int> profanityMasks;
-
-
-bool canBeProfanity(string& word) {
 	int mask = parseStringToMask(word);
 	readMaskCacheFile();
 
@@ -45,25 +39,16 @@ void readMaskCacheFile() {
 	std::ifstream file("cache");
 	std::string textFromFile;
 	std::stringstream sstream;
-	int mask = 0;
-
-	while (std::getline(file, textFromFile)) {
-		sstream << textFromFile;
-		sstream >> mask;
-		profanityMasks.push_back(mask);
-	ifstream file("cache");
-	string textFromFile;
-	stringstream sstream;
 	int number;
 	time_t time;
 
-	getline(file, textFromFile);
+	std::getline(file, textFromFile);
 	sstream << textFromFile;
 	sstream >> time;
 	if (time != getProfanityListModificationTime()) createCacheFile();
 
-	while (getline(file, textFromFile)) {
-		stringstream sstream2;
+	while (std::getline(file, textFromFile)) {
+		std::stringstream sstream2;
 		sstream2 << textFromFile;
 		sstream2 >> number;
 		profanityMasks.push_back(number);
@@ -73,25 +58,20 @@ void readMaskCacheFile() {
 }
 
 
-void writeMaskCacheFile() {
-	std::ofstream file("cache");
-
-	for (int mask : profanityMasks)
-		file << mask << "\n";
-
-	file.close();
-}
 void createCacheFile() {
-	ofstream cache("cache");
-	ifstream file("profanity_list.txt");
-	string textFromFile;
+	std::ofstream cache("cache");
+	std::ifstream file("profanity_list.txt");
+	std::string textFromFile;
 
 	cache << getProfanityListModificationTime();
 	
-	while (getline(file, textFromFile)) {
+	while (std::getline(file, textFromFile)) {
 		cache << "\n";
 		cache << parseStringToMask(textFromFile);
 	}
+
+	cache.close();
+	file.close();
 }
 
 
