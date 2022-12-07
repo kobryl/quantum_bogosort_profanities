@@ -1,5 +1,6 @@
 import os
 import sys
+from datetime import datetime
 
 from PySide6.QtCore import Slot, Qt
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
@@ -29,19 +30,28 @@ class MainWindow(QMainWindow):
     def setup(self):
         @Slot()
         def __addFalsePositive():
-            f = open("whitelist_debug.txt", "a")
+            f = open(PATH_TO_WHITELIST, "a")
             f.write(self.__falsePositive.toPlainText() + "\n")
             f.close()
 
         @Slot()
         def __addFalseNegative():
-            f = open("profanity_list_debug.txt", "a")
+            f = open(PATH_TO_PROFANITIES, "a")
             f.write(self.__falseNegative.toPlainText() + "\n")
             f.close()
 
         @Slot()
         def __run():
-            pass
+            timestamp = str(datetime.now().strftime("%Y-%m-%d %H%M%S"))
+            fileinput = open("input" + timestamp + ".txt", "w")
+            fileinput.write(self.__input.toPlainText())
+            os.startfile(PATH_TO_FILTER + "< input" + timestamp + ".txt > output" + timestamp + ".txt")
+            fileoutput = open("output" + timestamp + ".txt", "r")
+            self.__output.setPlainText(fileoutput.read())
+            fileoutput.close()
+            fileinput.close()
+            os.remove("input" + timestamp + ".txt")
+            os.remove("output" + timestamp + ".txt")
 
         @Slot()
         def __exit():
@@ -49,11 +59,11 @@ class MainWindow(QMainWindow):
 
         @Slot()
         def __help():
-            os.startfile("help.txt")                    # TODO: Change to program window (not notepad.exe)
+            os.startfile(PATH_TO_HELP)                      # TODO: Change to program window (not notepad.exe)
 
         @Slot()
         def __about():
-            os.startfile("README.md")                   # TODO: Change to program window (not notepad.exe)
+            os.startfile(PATH_TO_README)                    # TODO: Change to program window (not VS Code)
 
         self.__labelInput.setText("Tekst wejściowy:")
         self.__labelInput.move(5, 10)
