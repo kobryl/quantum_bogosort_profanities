@@ -86,3 +86,17 @@ time_t getProfanityListModificationTime() {
 
 	return time;
 }
+
+
+// Debug functions
+
+std::vector<int>* getMasks() {
+	return &profanityMasks;
+}
+
+
+void printMasks() {
+	for (int mask : profanityMasks) {
+		std::cout << std::bitset<32>(mask) << " = " << mask << "\n";
+	}
+}

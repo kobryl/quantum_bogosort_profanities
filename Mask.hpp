@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <stdio.h>
+#include <bitset>
 
 bool canBeProfanity(std::string& word);
 bool doBinaryMasksMatch(int mask);
@@ -20,5 +21,8 @@ void readMaskCacheFile();
 void createCacheFile();
 time_t getProfanityListModificationTime();
 
+// Debug functions
+std::vector<int>* getMasks();
+void printMasks();
 
 #endif
