@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sstream>
 
-bool canBeCurseWord(std::string word);
+bool canBeProfanity(std::string word);
 int parseStringToMask(std::string* word);
 void readMaskCacheFile();
 bool checkIfCanBeProfanity(int mask);

@@ -3,7 +3,7 @@
 using namespace std;
 
 vector<int> profanityMasks;
-bool canBeCurseWord(string word) {
+bool canBeProfanity(string word) {
 	int mask = parseStringToMask(&word);
 	readMaskCacheFile();
 
