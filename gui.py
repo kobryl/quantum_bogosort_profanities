@@ -1,9 +1,11 @@
+import os
 import sys
+
+from PySide6.QtCore import Slot, Qt
+from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
+    QMainWindow
+
 from constants import *
-from PySide6.QtCore import QRect, Slot, Qt
-from PySide6.QtWidgets import QWidget, QApplication, QToolTip, QPushButton, QLabel, QInputDialog, QPlainTextEdit, \
-    QTextEdit, QErrorMessage, QMessageBox, QMainWindow
-from PySide6.QtGui import QFont, QMouseEvent, QKeyEvent
 
 
 class MainWindow(QMainWindow):
@@ -26,12 +28,16 @@ class MainWindow(QMainWindow):
 
     def setup(self):
         @Slot()
-        def __falsePositive():
-            pass
+        def __addFalsePositive():
+            f = open("whitelist_debug.txt", "a")
+            f.write(self.__falsePositive.toPlainText() + "\n")
+            f.close()
 
         @Slot()
-        def __falseNegative():
-            pass
+        def __addFalseNegative():
+            f = open("profanity_list_debug.txt", "a")
+            f.write(self.__falseNegative.toPlainText() + "\n")
+            f.close()
 
         @Slot()
         def __run():
@@ -39,15 +45,15 @@ class MainWindow(QMainWindow):
 
         @Slot()
         def __exit():
-            pass
+            QApplication.instance().quit()
 
         @Slot()
         def __help():
-            pass
+            os.startfile("help.txt")                    # TODO: Change to program window (not notepad.exe)
 
         @Slot()
         def __about():
-            pass
+            os.startfile("README.md")                   # TODO: Change to program window (not notepad.exe)
 
         self.__labelInput.setText("Tekst wejściowy:")
         self.__labelInput.move(5, 10)
@@ -82,12 +88,13 @@ class MainWindow(QMainWindow):
         self.__falsePositive.move(TEXTAREA_WIDTH + 15, 40)
         self.__falsePositive.resize(TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
         self.__falsePositive.setPlaceholderText("Wpisz nowy wyjątek...")
-        self.__falsePositive.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.__input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.__input.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
 
         falsePositiveButton = QPushButton("Dodaj do wyjątków", self)
         falsePositiveButton.move(TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH, 80)
         falsePositiveButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        falsePositiveButton.clicked.connect(__falsePositive)
+        falsePositiveButton.clicked.connect(__addFalsePositive)
         falsePositiveButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.__labelFalseNegative.setText("Filtr nie wykrył wulgaryzmu? Dodaj go do listy:")
@@ -97,12 +104,13 @@ class MainWindow(QMainWindow):
         self.__falseNegative.move(TEXTAREA_WIDTH + 15, 150)
         self.__falseNegative.resize(TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
         self.__falseNegative.setPlaceholderText("Wpisz niewykryty wulgaryzm...")
-        self.__falseNegative.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.__input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.__input.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
 
         falseNegativeButton = QPushButton("Dodaj do wulgaryzmów", self)
         falseNegativeButton.move(TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH, 190)
         falseNegativeButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        falseNegativeButton.clicked.connect(__falseNegative)
+        falseNegativeButton.clicked.connect(__addFalseNegative)
         falseNegativeButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         helpButton = QPushButton("Pomoc", self)
