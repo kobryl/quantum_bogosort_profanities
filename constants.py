@@ -12,3 +12,9 @@ TEXTINPUT_HEIGHT = 30
 
 LABEL_WIDTH = TEXTAREA_WIDTH
 LABEL_HEIGHT = 30
+
+PATH_TO_FILTER = "./Debug/profanities.exe"
+PATH_TO_WHITELIST = "./whitelist_debug.txt"
+PATH_TO_PROFANITIES = "./profanity_list_debug.txt.txt"
+PATH_TO_HELP = "./help.txt"
+PATH_TO_README = "./README.md"
