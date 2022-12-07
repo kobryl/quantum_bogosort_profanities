@@ -1,9 +1,7 @@
 #include "Mask.hpp"
 
-using namespace std;
-
-vector<int> profanityMasks;
-bool canBeProfanity(string& word) {
+std::vector<int> profanityMasks;
+bool canBeProfanity(std::string& word) {
 	int mask = parseStringToMask(word);
 	readMaskCacheFile();
 
@@ -22,7 +20,7 @@ bool doBinaryMasksMatch(int mask) {
 }
 
 
-int parseStringToMask(string& word) {
+int parseStringToMask(std::string& word) {
 	int mask = 0;
 	int letterNumber;
 	for (int i = 0; i < word.length(); i++) {
@@ -37,12 +35,12 @@ int parseStringToMask(string& word) {
 
 
 void readMaskCacheFile() {
-	ifstream file("cache");
-	string textFromFile;
-	stringstream sstream;
+	std::ifstream file("cache");
+	std::string textFromFile;
+	std::stringstream sstream;
 	int number;
 
-	while (getline(file, textFromFile)) {
+	while (std::getline(file, textFromFile)) {
 		sstream << textFromFile;
 		sstream >> number;
 		profanityMasks.push_back(number);
