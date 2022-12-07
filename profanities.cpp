@@ -107,6 +107,8 @@ void loadInputDataToArray(std::string fileName, std::vector<std::string>& source
 
 int main() {
 
+    std::string xd = "kurwxakakakkaddxxdcxvcxzcxczaa";
+    std::cout << canBeProfanity(xd);
     std::vector<std::string> sourceArray;
     loadInputDataToArray("dane.txt", sourceArray);
     removeUnambiguousDiactrics(sourceArray);
