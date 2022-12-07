@@ -90,13 +90,21 @@ time_t getProfanityListModificationTime() {
 
 // Debug functions
 
+// Returns a pointer to a vector of all of the masks.
 std::vector<int>* getMasks() {
 	return &profanityMasks;
 }
 
 
+// Prints all masks in format: binary rep. = letters = int rep.
+// e.g. 00000000010100100000010000000000 = kruw = 5374976
 void printMasks() {
 	for (int mask : profanityMasks) {
-		std::cout << std::bitset<32>(mask) << " = " << mask << "\n";
+		std::bitset<32> bitMask = std::bitset<32>(mask);
+		std::cout << bitMask << " = ";
+		for (int i = 0; i < 32; i++) {
+			if (bitMask.test(i)) std::cout << (char)('a' + i);
+		}
+		std::cout << " = " << mask << "\n";
 	}
 }
