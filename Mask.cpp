@@ -38,13 +38,23 @@ void readMaskCacheFile() {
 	std::ifstream file("cache");
 	std::string textFromFile;
 	std::stringstream sstream;
-	int number;
+	int mask = 0;
 
 	while (std::getline(file, textFromFile)) {
 		sstream << textFromFile;
-		sstream >> number;
-		profanityMasks.push_back(number);
+		sstream >> mask;
+		profanityMasks.push_back(mask);
 	}
+
+	file.close();
+}
+
+
+void writeMaskCacheFile() {
+	std::ofstream file("cache");
+
+	for (int mask : profanityMasks)
+		file << mask << "\n";
 
 	file.close();
 }
