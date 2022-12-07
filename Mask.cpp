@@ -3,15 +3,15 @@
 using namespace std;
 
 vector<int> profanityMasks;
-bool canBeProfanity(string word) {
-	int mask = parseStringToMask(&word);
+bool canBeProfanity(string& word) {
+	int mask = parseStringToMask(word);
 	readMaskCacheFile();
 
-	return checkIfCanBeProfanity(mask);
+	return doBinaryMasksMatch(mask);
 }
 
 
-bool checkIfCanBeProfanity(int mask) {
+bool doBinaryMasksMatch(int mask) {
 	int andMask = 0;
 	for (int word : profanityMasks) {
 		andMask = (word & mask);
@@ -22,11 +22,11 @@ bool checkIfCanBeProfanity(int mask) {
 }
 
 
-int parseStringToMask(string* word) {
+int parseStringToMask(string& word) {
 	int mask = 0;
 	int letterNumber;
-	for (int i = 0; i < (*word).length(); i++) {
-		letterNumber = tolower((*word)[i]) - 'a';
+	for (int i = 0; i < word.length(); i++) {
+		letterNumber = word[i] - 'a';
 		mask |= 1UL << letterNumber;
 	}
 
