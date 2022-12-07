@@ -26,7 +26,7 @@ void collapseLetters(std::vector<std::string>& sourceArray) {
 }
 
 void removeSpecialCharactersAndDigits(std::vector<std::string>& sourceArray) {
-    std::map<char, char> specialCharactersSwapMap= {
+    std::map<char, char> specialCharactersSwapMap = {
         {'0', 'o'},
         {'1', 'i'},
         {'2', 'z'},
@@ -62,7 +62,7 @@ void toLowerCases(std::vector<std::string>& sourceArray) {
     }
 }
 
-void removeUnambiguousDiactrics(std::vector<std::string>& sourceArray){
+void removeUnambiguousDiactrics(std::vector<std::string>& sourceArray) {
     std::map<std::pair<int, int>, char> diactricsSwapMap = {
         {{-60, -123}, 'a'},
         {{-60, -103}, 'e'},
@@ -92,7 +92,7 @@ void removeUnambiguousDiactrics(std::vector<std::string>& sourceArray){
     return;
 }
 
-void printArray(std::vector<std::string>& sourceArray){
+void printArray(std::vector<std::string>& sourceArray) {
     for (int i = 0; i < sourceArray.size(); i++) {
         std::cout << sourceArray[i] << "\n";
     }
@@ -106,7 +106,7 @@ void loadInputDataToArray(std::string fileName, std::vector<std::string>& source
 }
 
 int main() {
-    
+
     std::vector<std::string> sourceArray;
     loadInputDataToArray("dane.txt", sourceArray);
     removeUnambiguousDiactrics(sourceArray);
