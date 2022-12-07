@@ -9,9 +9,9 @@
 #include <sstream>
 
 bool canBeProfanity(std::string word);
+bool doBinaryMasksMatch(int mask);
 int parseStringToMask(std::string* word);
 void readMaskCacheFile();
-bool checkIfCanBeProfanity(int mask);
 
 
 #endif
