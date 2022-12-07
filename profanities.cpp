@@ -7,8 +7,8 @@
 #include <map>
 #include <fstream>
 #include <utility>
+#include <algorithm>
 #include "Mask.hpp"
-
 
 void collapseLetters(std::vector<std::string>& sourceArray) {
     std::string tmpString;
@@ -98,6 +98,51 @@ void printArray(std::vector<std::string>& sourceArray) {
     }
 }
 
+void generatePossibleVariationsOfLetters(std::vector<std::string>& sourceArray,
+    std::vector < std::vector<std::pair<std::pair<int, int>, char>>>& outputArray) {
+    std::map<char, std::vector<char>> possibleSingleCharacterSwaps = {
+        {'i', {'l', 'i'}},
+        {'l', {'i', 'l'}},
+        {'ó', {'o', 'u'}},
+        {'v', {'v', 'u', 'w'}},
+        {'z', {'z', 's'}},
+        {'s', {'s', 'z'}},
+        {'u', {'u', 'v', 'w'}}
+    };
+    std::map<std::pair<char, char>, std::vector<char>> possibleDoubleCharacterSwaps = {
+        {{'|', '<'}, {'k', 'e'}}
+    };
+    outputArray.clear();
+
+    //single characters
+    for(int i = 0; i < sourceArray.size(); i++){
+        std::vector < std::pair<std::pair<int, int>, char>> possibleLettersInWord;
+        for (int j = 0; j < sourceArray[i].size(); j++) {
+            char currentCharacterInWord = sourceArray[i][j];
+            if (possibleSingleCharacterSwaps.find(currentCharacterInWord) != possibleSingleCharacterSwaps.end()) {
+                for (char letter : possibleSingleCharacterSwaps[currentCharacterInWord]) {
+                    possibleLettersInWord.push_back({ {j, 1}, letter });
+                }
+            }
+            else
+                possibleLettersInWord.push_back({ {j, 1}, currentCharacterInWord });
+        }
+
+        //double characters
+        std::vector < std::pair<std::pair<int, int>, char>> possibleDoubleLettersInWord;
+        for (int j = 1; j < sourceArray[i].size(); j++) {
+            std::pair<char, char> currentCharactersInWord = { sourceArray[i][j - 1], sourceArray[i][j] };
+            if (possibleDoubleCharacterSwaps.find(currentCharactersInWord) != possibleDoubleCharacterSwaps.end()) {
+                for (char letter : possibleDoubleCharacterSwaps[currentCharactersInWord]) {
+                    possibleLettersInWord.push_back({ {j - 1, 2}, letter });
+                }
+            }
+        }
+        std::sort(possibleLettersInWord.begin(), possibleLettersInWord.end());
+        outputArray.push_back(possibleLettersInWord);
+    }
+}
+
 void loadInputDataToArray(std::string fileName, std::vector<std::string>& sourceArray) {
     std::ifstream inputFile(fileName);
     std::string inputWord;
@@ -105,28 +150,33 @@ void loadInputDataToArray(std::string fileName, std::vector<std::string>& source
         sourceArray.push_back(inputWord);
 }
 
-int main() {
-    MaskFactory mf = MaskFactory();
-    std::string xd = "kurwxakakakkaddxxdcxvcxzcxczaa";
-    std::cout << mf.canBeProfanity(xd);
+void generateAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
+    int index, int arrayLocationIndex, std::string currentWord) {
+    if (index > inputArray.back().first.first) {
+        std::cout << currentWord << "\n";
+        return;
+    }
+    while (arrayLocationIndex < inputArray.size() && inputArray[arrayLocationIndex].first.first < index)
+        arrayLocationIndex++;
+    while (arrayLocationIndex < inputArray.size() && inputArray[arrayLocationIndex].first.first == index) {
+        generateAllPossibleWords(inputArray, index + inputArray[arrayLocationIndex].first.second, arrayLocationIndex, currentWord + inputArray[arrayLocationIndex].second);
+        arrayLocationIndex++;
+    }
+}
 
+int main() {
+    //std::cout << canBeProfanity(xd);
     std::vector<std::string> sourceArray;
+    std::vector < std::vector<std::pair<std::pair<int, int>, char>>> outputArray;
     loadInputDataToArray("dane.txt", sourceArray);
     removeUnambiguousDiactrics(sourceArray);
     removeSpecialCharactersAndDigits(sourceArray);
     toLowerCases(sourceArray);
     collapseLetters(sourceArray);
-    printArray(sourceArray);
+    //printArray(sourceArray);
+    generatePossibleVariationsOfLetters(sourceArray, outputArray);
 
+    for (int i = 0; i < outputArray.size(); i++) {
+        generateAllPossibleWords(outputArray[i], 0, 0, "");
+    }
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

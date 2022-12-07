@@ -1,10 +1,11 @@
 import os
 import sys
 from datetime import datetime
+from unidecode import unidecode
 
 from PySide6.QtCore import Slot, Qt
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
-    QMainWindow
+    QMainWindow, QErrorMessage, QMessageBox
 
 from constants import *
 
@@ -30,28 +31,63 @@ class MainWindow(QMainWindow):
     def setup(self):
         @Slot()
         def __addFalsePositive():
-            f = open(PATH_TO_WHITELIST, "a")
-            f.write(self.__falsePositive.toPlainText() + "\n")
-            f.close()
+            try:
+                text = self.__falsePositive.toPlainText()
+                text = text.lower()
+                text = unidecode(text)
+                text = text.replace(" ", "")
+                if DEBUG:
+                    print(text)
+                f = open(PATH_TO_WHITELIST, "a")
+                f.write(text + "\n")
+                f.close()
+                QMessageBox.information(self, "Sukces", "Dodano do białej listy")
+                self.__falsePositive.setPlainText("")
+            except Exception as e:
+                if DEBUG:
+                    print(e)
+                QMessageBox.critical(self, "Błąd", "Nie udało się zapisać.")
 
         @Slot()
         def __addFalseNegative():
-            f = open(PATH_TO_PROFANITIES, "a")
-            f.write(self.__falseNegative.toPlainText() + "\n")
-            f.close()
+            try:
+                text = self.__falseNegative.toPlainText()
+                text = text.lower()
+                text = unidecode(text)
+                text = text.replace(" ", "")
+                if DEBUG:
+                    print(text)
+                f = open(PATH_TO_WHITELIST, "a")
+                f = open(PATH_TO_PROFANITIES, "a")
+                f.write(text + "\n")
+                f.close()
+                QMessageBox.information(self, "Sukces", "Dodano do czarnej listy")
+                self.__falseNegative.setPlainText("")
+            except Exception as e:
+                if DEBUG:
+                    print(e)
+                QMessageBox.critical(self, "Błąd", "Nie udało się zapisać.")
 
         @Slot()
         def __run():
-            timestamp = str(datetime.now().strftime("%Y-%m-%d %H%M%S"))
-            fileinput = open("input" + timestamp + ".txt", "w")
-            fileinput.write(self.__input.toPlainText())
-            os.startfile(PATH_TO_FILTER + "< input" + timestamp + ".txt > output" + timestamp + ".txt")
-            fileoutput = open("output" + timestamp + ".txt", "r")
-            self.__output.setPlainText(fileoutput.read())
-            fileoutput.close()
-            fileinput.close()
-            os.remove("input" + timestamp + ".txt")
-            os.remove("output" + timestamp + ".txt")
+            timestamp = str(datetime.now().strftime("%Y%m%d%H%M%S"))
+            fileInput = open("input" + timestamp + ".txt", "w")
+            fileInput.write(self.__input.toPlainText())
+            try:
+                os.system(PATH_TO_FILTER + " < input" + timestamp + ".txt > output" + timestamp + ".txt")
+                QMessageBox.information(self, "Filtr wulgaryzmów", "Filtrowanie zakończone pomyślnie.")
+                fileOutput = open("output" + timestamp + ".txt", "r")
+                self.__output.setPlainText(fileOutput.read())
+                fileOutput.close()
+                os.remove("output" + timestamp + ".txt")
+                fileInput.close()
+                os.remove("input" + timestamp + ".txt")
+            except FileNotFoundError as e:
+                if DEBUG:
+                    print(e)
+                QMessageBox.critical(self, "Filtr wulgaryzmów", "Nie znaleziono pliku wykonywalnego.")
+                fileInput.close()
+                os.remove("input" + timestamp + ".txt")
 
         @Slot()
         def __exit():
