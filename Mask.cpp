@@ -26,8 +26,10 @@ int parseStringToMask(string& word) {
 	int mask = 0;
 	int letterNumber;
 	for (int i = 0; i < word.length(); i++) {
+		if (word[i] < 'a' || word[i] > 'z')
+			continue;
 		letterNumber = word[i] - 'a';
-		mask |= 1UL << letterNumber;
+		mask |= 1 << letterNumber;
 	}
 
 	return mask;
