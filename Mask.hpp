@@ -7,11 +7,18 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <stdio.h>
 
-bool canBeProfanity(std::string word);
-int parseStringToMask(std::string* word);
+bool canBeProfanity(std::string& word);
+int parseStringToMask(std::string& word);
 void readMaskCacheFile();
-bool checkIfCanBeProfanity(int mask);
+bool doBinaryMasksMatch(int mask);
+void createCacheFile();
+time_t getProfanityListModificationTime();
 
 
 #endif
