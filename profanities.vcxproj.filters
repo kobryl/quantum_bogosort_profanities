@@ -18,5 +18,16 @@
     <ClCompile Include="profanities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Mask.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cache">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

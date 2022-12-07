@@ -7,7 +7,7 @@
 #include <map>
 #include <fstream>
 #include <utility>
-
+#include "Mask.hpp"
 
 
 void collapseLetters(std::vector<std::string>& sourceArray) {
