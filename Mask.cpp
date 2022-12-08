@@ -1,19 +1,26 @@
 #include "Mask.hpp"
 
-std::vector<int> profanityMasks;
+/*
+*	Implementation of MaskFactory class.
+*	
+*	Provides an effictient method for preliminary checking whether a word could be a profanity or not, by matching the letters the words consist of.
+*	When a profanity list is modified, a new cache file is created for the class to use. When an instance is initialized, the file is read.
+*/
 
-bool canBeProfanity(std::string& word) {
-	int mask = parseStringToMask(word);
+// Default constructor: initializes masks vector.
+// Creates a new cache file to read if the old one is not recent.
+MaskFactory::MaskFactory() {
+	if (!isCacheFileRecent()) createCacheFile();
 	readMaskCacheFile();
-
-	return doBinaryMasksMatch(mask);
 }
 
 
-bool doBinaryMasksMatch(int mask) {
+// Returns true if two masks match, false otherwise.
+// Masks are considered equal when two words (from which the masks were constructed) consist of the same letters.
+bool MaskFactory::isProfanityMask(int mask) {
 	int andMask = 0;
 	for (int word : profanityMasks) {
-		andMask = (word & mask);
+		andMask = (word & mask);							// to mo¿na zmieniæ na binary search
 		if (andMask == word) return true;
 	}
 
@@ -21,7 +28,10 @@ bool doBinaryMasksMatch(int mask) {
 }
 
 
-int parseStringToMask(std::string& word) {
+// Returns a mask generated from a given word.
+// A mask is a numerical representation of the letters a word consists of. 
+// It's created by setting specific bits in an int to '1', based on indices computed from the given word (e.g. 'a' = LSB, 'z' = 25th bit from LSB).
+int MaskFactory::parseStringToMask(std::string& word) {
 	int mask = 0;
 	int letterNumber;
 	for (int i = 0; i < word.length(); i++) {
@@ -35,70 +45,96 @@ int parseStringToMask(std::string& word) {
 }
 
 
-void readMaskCacheFile() {
-	std::ifstream file("cache");
+// Reads the cache file and inserts masks into the mask vector.
+void MaskFactory::readMaskCacheFile() {
+	std::ifstream list(CACHE_FILE_NAME);
 	std::string textFromFile;
 	std::stringstream sstream;
 	int number;
-	time_t time;
 
-	std::getline(file, textFromFile);
-	sstream << textFromFile;
-	sstream >> time;
-	if (time != getProfanityListModificationTime()) createCacheFile();
-
-	while (std::getline(file, textFromFile)) {
+	std::getline(list, textFromFile);	// Skip the first line, which is a timestamp
+	while (std::getline(list, textFromFile)) {
 		std::stringstream sstream2;
 		sstream2 << textFromFile;
 		sstream2 >> number;
 		profanityMasks.push_back(number);
 	}
 
-	file.close();
+	list.close();
 }
 
 
-void createCacheFile() {
-	std::ofstream cache("cache");
-	std::ifstream file("profanity_list.txt");
+// Creates a cache file and writes masks computed from the profanity list file.
+void MaskFactory::createCacheFile() {
+	std::ofstream cache(CACHE_FILE_NAME);
+	std::ifstream list(PROFANITY_LIST_NAME);
 	std::string textFromFile;
 
 	cache << getProfanityListModificationTime();
 	
-	while (std::getline(file, textFromFile)) {
+	while (std::getline(list, textFromFile)) {
 		cache << "\n";
 		cache << parseStringToMask(textFromFile);
 	}
 
 	cache.close();
-	file.close();
+	list.close();
 }
 
 
-time_t getProfanityListModificationTime() {
+// Returns the profanity list's modification time.
+time_t MaskFactory::getProfanityListModificationTime() {
 	time_t time;
 	struct stat attrib;
 	__int64 ltime;
 	_time64(&ltime);
 
-	stat("profanity_list.txt", &attrib);
+	stat(PROFANITY_LIST_NAME, &attrib);
 	time = attrib.st_mtime;
 
 	return time;
 }
 
 
+// Checks if the cache file is recent. Returns true or false depending on the outcome.
+// This is determined by comparing the list's modification time and the recorded modification time in the cache file.
+bool MaskFactory::isCacheFileRecent() {
+	std::ifstream list(CACHE_FILE_NAME);
+	std::string textFromFile;
+	std::stringstream sstream;
+	time_t recordedTime;
+
+	std::getline(list, textFromFile);
+	sstream << textFromFile;
+	sstream >> recordedTime;
+	list.close();
+
+	if (recordedTime != getProfanityListModificationTime()) return false;
+	return true;
+}
+
+
+// Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
+// A mask is a numerical representation of the letters a word consists of. If two words' masks match, then they consist of the same letters.
+// Whether a word could be a profanity is determined by comparing masks of known profanities with the mask of the given word.
+bool MaskFactory::canBeProfanity(std::string& word) {
+	int mask = parseStringToMask(word);
+
+	return isProfanityMask(mask);
+}
+
+
 // Debug functions
 
 // Returns a pointer to a vector of all of the masks.
-std::vector<int>* getMasks() {
+std::vector<int>* MaskFactory::getMasks() {
 	return &profanityMasks;
 }
 
 
 // Prints all masks in format: binary rep. = letters = int rep.
 // e.g. 00000000010100100000010000000000 = kruw = 5374976
-void printMasks() {
+void MaskFactory::printMasks() {
 	for (int mask : profanityMasks) {
 		std::bitset<32> bitMask = std::bitset<32>(mask);
 		std::cout << bitMask << " = ";
