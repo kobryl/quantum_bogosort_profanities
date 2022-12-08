@@ -32,7 +32,7 @@ private:
 	std::vector<int> profanityMasks;
 
 	// Returns true if two masks match, false otherwise.
-	bool isProfanityMask(int mask);
+	bool doMasksMatch(int firstMask, int secondMask);
 
 	// Returns a mask generated from a given word.
 	int parseStringToMask(std::string& word);
@@ -54,7 +54,7 @@ public:
 	MaskFactory();
 
 	// Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
-	bool canBeProfanity(std::string& word);
+	bool canBeProfanity(std::string& word, int profanityIndex);
 
 	// Debug functions
 	// Returns a pointer to a vector of all of the masks.

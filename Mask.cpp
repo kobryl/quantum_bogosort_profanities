@@ -17,13 +17,9 @@ MaskFactory::MaskFactory() {
 
 // Returns true if two masks match, false otherwise.
 // Masks are considered equal when two words (from which the masks were constructed) consist of the same letters.
-bool MaskFactory::isProfanityMask(int mask) {
-	int andMask = 0;
-	for (int word : profanityMasks) {
-		andMask = (word & mask);							// to mo¿na zmieniæ na binary search
-		if (andMask == word) return true;
-	}
-
+bool MaskFactory::doMasksMatch(int firstMask, int secondMask) {
+	int comparisonMask = (firstMask & secondMask);
+	if (comparisonMask == firstMask || comparisonMask == secondMask) return true;
 	return false;
 }
 
@@ -116,11 +112,11 @@ bool MaskFactory::isCacheFileRecent() {
 
 // Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
 // A mask is a numerical representation of the letters a word consists of. If two words' masks match, then they consist of the same letters.
-// Whether a word could be a profanity is determined by comparing masks of known profanities with the mask of the given word.
-bool MaskFactory::canBeProfanity(std::string& word) {
+// Whether a word could be a profanity is determined by comparing a profanity mask with the given word's mask.
+bool MaskFactory::canBeProfanity(std::string& word, int profanityIndex) {
 	int mask = parseStringToMask(word);
 
-	return isProfanityMask(mask);
+	return doMasksMatch(mask, profanityMasks[profanityIndex]);
 }
 
 
@@ -132,12 +128,13 @@ std::vector<int>* MaskFactory::getMasks() {
 }
 
 
-// Prints all masks in format: binary rep. = letters = int rep.
-// e.g. 00000000010100100000010000000000 = kruw = 5374976
+// Prints all masks in format: index: binary rep. = letters = int rep.
+// e.g. 30: 00000000010100100000010000000000 = kruw = 5374976
 void MaskFactory::printMasks() {
+	int i = 0;
 	for (int mask : profanityMasks) {
 		std::bitset<32> bitMask = std::bitset<32>(mask);
-		std::cout << bitMask << " = ";
+		std::cout << i++ << ": " << bitMask << " = ";
 		for (int i = 0; i < 32; i++) {
 			if (bitMask.test(i)) std::cout << (char)('a' + i);
 		}
