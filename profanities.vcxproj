@@ -139,14 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Mask.cpp" />
+    <ClCompile Include="MaskFactory.cpp" />
     <ClCompile Include="profanities.cpp" />
-    <ClCompile Include="ProfanityFilter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cache" />
-    <ClInclude Include="Mask.hpp" />
-    <ClInclude Include="ProfanityFilter.h" />
+    <ClInclude Include="MaskFactory.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
