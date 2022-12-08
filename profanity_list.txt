@@ -23,6 +23,7 @@ dupn 0
 dupo 0
 dupy 0
 dziwk 0
+fiut 0
 gown 0
 huj 0
 hwdp 3
@@ -34,7 +35,6 @@ kutafon 10
 kutas 3
 lachociag 10
 lodziara 10
-minet 0
 obciag 0
 piczk 0
 pierdal 4
