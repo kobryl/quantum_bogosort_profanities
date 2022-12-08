@@ -240,7 +240,8 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
 void ProfanityFilter::loadWhitelist() {
     std::ifstream whitelistFile("default_lists/whitelist.txt");
     std::string whitelistWord;
-    while (whitelistFile >> whitelistWord)
+    int tmp;
+    while (whitelistFile >> whitelistWord >> tmp)
         whitelistArray.push_back(whitelistWord);
 }
 
