@@ -1,0 +1,10 @@
+
+Instrukcja obs³ugi programu w trybie graficznym:
+1. WprowadŸ tekst do przefiltrowania w obszarze "Tekst wejœciowy".
+2. Naciœnij przycisk "Uruchom".
+3. Ocenzurowany tekst pojawi siê w obszarze "Tekst wyjœciowy".
+
+Istnieje mo¿liwoœæ dodania s³ów do wyj¹tków lub do listy wulgaryzmów - nale¿y wpisaæ s³owo w odpowiednie pole (w zale¿noœci do jakiej listy chcemy dane s³owo dodaæ) i nacisn¹æ znajduj¹cy siê pod nim przycisk. Dodawane w ten sposób s³owa bêd¹ filtrowane tylko je¿eli s³owo do przefiltrowania nie bêdzie mia³o zmienionej kolejnoœci znaków.
+U¿ytkownicy zaawansowani mog¹ dodaæ s³owo bezpoœrednio do pliku listy i okreœliæ w³asn¹ dok³adnoœæ - szczegó³y znajduj¹ siê w pliku README.md.
+
+O trybie tekstowym dzia³ania aplikacji mo¿na przeczytaæ w pliku README.md.
