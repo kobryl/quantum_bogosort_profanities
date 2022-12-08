@@ -1,4 +1,6 @@
+amicycj
 amicycyj
+arcycz
 bezrucha
 blachuj
 blechuj
@@ -13,10 +15,8 @@ ciotakt
 ciotysi
 cycer
 cych
-cyci
-cycj
+cycie
 cycl
-cycz
 dachuj
 dmuchuj
 dobrucha
@@ -47,14 +47,12 @@ nadrucha
 nansuk
 netsuke
 nieocipie
-nierucha
 noclegown
 obciagnik
 obciago
 obciagu
 odchuchuj
 okutasz
-pacyce
 parucha
 piecuchuj
 pociot
@@ -90,7 +88,8 @@ sztagown
 szturchuj
 sztychuj
 trucha
-urucha
+unierucha
+uruchami
 wachuj
 wiercipie
 wierucha
