@@ -110,11 +110,19 @@ bool MaskFactory::isCacheFileRecent(const char* cacheName, const char* listName)
 
 // Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
 // A mask is a numerical representation of the letters a word consists of. If two words' masks match, then they consist of the same letters.
-// Whether a word could be a profanity is determined by comparing a profanity mask with the given word's mask.
 bool MaskFactory::canBeProfanity(std::string& word, int profanityIndex) {
 	int mask = parseStringToMask(word);
 
 	return doMasksMatch(mask, profanityMasks[profanityIndex]);
+}
+
+
+// Checks if the provided word can be a whitelisted based on it's mask. Returns true or false depending on the outcome.
+// A mask is a numerical representation of the letters a word consists of. If two words' masks match, then they consist of the same letters.
+bool MaskFactory::canBeWhitelisted(std::string& word, int whitelistIndex) {
+	int mask = parseStringToMask(word);
+
+	return doMasksMatch(mask, whitelistMasks[whitelistIndex]);
 }
 
 

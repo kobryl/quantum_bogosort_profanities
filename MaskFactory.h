@@ -58,6 +58,9 @@ public:
 	// Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
 	bool canBeProfanity(std::string& word, int profanityIndex);
 
+	// Checks if the provided word can be a whitelisted based on it's mask. Returns true or false depending on the outcome.
+	bool canBeWhitelisted(std::string& word, int whitelistIndex);
+
 
 	// Debug functions
 
