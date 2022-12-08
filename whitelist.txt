@@ -107,3 +107,4 @@ wytrzachuj 0
 zakutasz 0
 zaniechuj 0
 zdziwk 0
+
