@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_WHITELIST, "a") as f:
-                    f.write(text + "\n")
+                    f.write(text + " 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do białej listy")
                 self.__falsePositive.setPlainText("")
             except Exception as e:
@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_PROFANITIES, "a") as f:
-                    f.write(text + "\n")
+                    f.write(text + " 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do czarnej listy")
                 self.__falseNegative.setPlainText("")
             except Exception as e:
@@ -90,11 +90,13 @@ class MainWindow(QMainWindow):
 
         @Slot()
         def __help():
-            os.startfile(PATH_TO_HELP)                      # TODO: Change to program window (not notepad.exe)
+            self.__helpWindow = HelpWindow()
+            self.__helpWindow.show()
 
         @Slot()
-        def __about():
-            os.startfile(PATH_TO_README)                    # TODO: Change to program window (not VS Code)
+        def __about():                                  # TODO: Write about.txt file
+            self.__aboutWindow = AboutWindow()
+            self.__aboutWindow.show()
 
         self.__labelInput.setText("Tekst wejściowy:")
         self.__labelInput.move(5, 10)
@@ -179,7 +181,36 @@ class AboutWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("O programie")
-        self.setFixedSize(400, 300)
+        self.setFixedSize(WIDGET_WIDTH, WIDGET_HEIGHT)
+        self.__aboutText = QLabel(self)
+        try:
+            with open(PATH_TO_ABOUT, "r") as f:
+                self.__aboutText.setText(f.read())
+        except FileNotFoundError:
+            self.__aboutText.setText("Nie znaleziono pliku zawierającego informacje o programie. "
+                                     "Ponowne pobranie programu powinno rozwiązać problem.")
+        self.__aboutText.move(WIDGET_MARGIN, WIDGET_MARGIN)
+        self.__aboutText.resize(WIDGET_TEXT_WIDTH, WIDGET_TEXT_HEIGHT)
+        self.__aboutText.setWordWrap(True)
+        self.__aboutText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignJustify)
+
+
+class HelpWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Pomoc")
+        self.setFixedSize(WIDGET_WIDTH, WIDGET_HEIGHT)
+        self.__helpText = QLabel(self)
+        try:
+            with open(PATH_TO_HELP, "r") as file:
+                self.__helpText.setText(file.read())
+        except FileNotFoundError:
+            self.__helpText.setText("Nie znaleziono pliku zawierającego pomoc. "
+                                    "Ponowne pobranie programu powinno rozwiązać problem.")
+        self.__helpText.move(WIDGET_MARGIN, WIDGET_MARGIN)
+        self.__helpText.resize(WIDGET_TEXT_WIDTH, WIDGET_TEXT_HEIGHT)
+        self.__helpText.setWordWrap(True)
+        self.__helpText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignJustify)
 
 
 if __name__ == '__main__':
