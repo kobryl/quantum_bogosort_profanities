@@ -188,14 +188,12 @@ bool ProfanityFilter::isOnWhitelist(std::string& potentialProfanityWord) {
 
 
 bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray) {
-    if (isOnWhitelist(potentialProfanityWord))
-        return false;
     for (int i = 0; i < profanitiesArray.size(); i++) {
         std::string& currentProfanity = profanitiesArray[i];
         if (!wordMaskFactory.canBeProfanity(potentialProfanityWord, i))
             continue;
         if (containsSubstring(potentialProfanityWord, currentProfanity, allowedCharactersBetweenWordsArray[i])) {
-            std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << "\n";
+            std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << " originalnie:"<<originalData[originalIndex] << "\n";
             return true;
 
         }
@@ -204,7 +202,7 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
         for (int i = 0; i < potentialProfanityWord.size() - 1; i++) {
             std::swap(potentialProfanityWord[i], potentialProfanityWord[i + 1]);
             if (containsSubstring(potentialProfanityWord, currentProfanity, 0)){
-                std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << "\n";
+std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << " originalnie:"<<originalData[originalIndex] << "\n";
                 return true;
 
             }
@@ -270,7 +268,10 @@ void ProfanityFilter::censorInputtedText() {
 
     for (int i = 0; i < processedArray.size(); i++) {
         std::string tmp = "";
-        bool isCensored = findProfanityInAllPossibleWords(processedArray[i], 0, 0, &tmp);
+        originalIndex = i;
+        bool isCensored = false;
+        if(!isOnWhitelist(originalData[i]))
+        isCensored = findProfanityInAllPossibleWords(processedArray[i], 0, 0, &tmp);
         if (isCensored)
             outputArray.push_back(std::string(originalData[i].size(), '*'));
         else

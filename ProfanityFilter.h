@@ -14,6 +14,7 @@ private:
     std::vector<std::vector<std::pair<std::pair<int, int>, char>>> processedArray;
     std::vector<int> allowedCharactersBetweenWordsArray;
     MaskFactory wordMaskFactory;
+    int originalIndex;
 
     void collapseLetters(std::vector<std::string>& sourceArray);
 
