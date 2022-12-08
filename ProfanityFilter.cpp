@@ -1,4 +1,5 @@
 #include "ProfanityFilter.h"
+#include "MaskFactory.h"
 
 
 void ProfanityFilter::collapseLetters(std::vector<std::string>& sourceArray) {
@@ -179,9 +180,8 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
     //    return false;
     for (int i = 0; i < profanitiesArray.size(); i++) {
         std::string& currentProfanity = profanitiesArray[i];
-        //TODO
-        //if (!maskFactory.canBeProfanity(i, potentialProfanityWord))  
-        //    return false;
+        if (!wordMaskFactory.canBeProfanity(potentialProfanityWord, i))
+            continue;
         if (containsSubstring(potentialProfanityWord, currentProfanity, 2))
             return true;
 
@@ -220,6 +220,8 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
 
 
 void ProfanityFilter::censorInputtedText() {
+    wordMaskFactory = MaskFactory();
+
     removeUnambiguousDiactrics(sourceArray);
     removeSpecialCharactersAndDigits(sourceArray);
     toLowerCases(sourceArray);
