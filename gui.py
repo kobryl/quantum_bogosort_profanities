@@ -1,11 +1,11 @@
 import os
 import sys
 from datetime import datetime
-from unidecode import unidecode
 
 from PySide6.QtCore import Slot, Qt
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
-    QMainWindow, QErrorMessage, QMessageBox
+    QMainWindow, QMessageBox, QWidget
+from unidecode import unidecode
 
 from constants import *
 
@@ -173,6 +173,13 @@ class MainWindow(QMainWindow):
         exitButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
+
+
+class AboutWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("O programie")
+        self.setFixedSize(400, 300)
 
 
 if __name__ == '__main__':
