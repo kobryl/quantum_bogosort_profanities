@@ -35,6 +35,8 @@ private:
         int index, int arrayLocationIndex, std::string* currentWord);
 
     void loadProfanities();
+
+    void loadWhitelist();
 public:
     std::vector<std::string> outputArray;
 
