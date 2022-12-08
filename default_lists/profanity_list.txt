@@ -10,7 +10,6 @@ cipk 0
 cipo 0
 cipu 0
 cipy 0
-ciul 0
 cwel 0
 cyck 0
 czarnuch 5
@@ -29,8 +28,8 @@ huj 0
 hwdp 3
 jeb 0
 kubale 4
-kurew 8
-kurw 8
+kurew 5
+kurw 5
 kutafon 10
 kutas 3
 lachociag 10
