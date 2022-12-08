@@ -98,7 +98,7 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
         {'v', {'v', 'u', 'w'}},
         {'z', {'z', 's'}},
         {'s', {'s', 'z'}},
-        {'u', {'u', 'v', 'w'}}
+        {'u', {'u', 'v'}}
     };
     std::map<std::pair<char, char>, std::vector<char>> possibleDoubleCharacterSwaps = {
         {{'i', '<'}, {'k', 'e'}},
@@ -163,7 +163,7 @@ bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& s
                     break;
                 }
             }
-            if (currentAllowedCharactersBetweenInWord < 0 || idx + j > checkedWord.size()) {
+            if (currentAllowedCharactersBetweenInWord < 0 || idx + j >= checkedWord.size()) {
                 found = false;
                 break;
             }
@@ -194,14 +194,20 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
         std::string& currentProfanity = profanitiesArray[i];
         if (!wordMaskFactory.canBeProfanity(potentialProfanityWord, i))
             continue;
-        if (containsSubstring(potentialProfanityWord, currentProfanity, 2))
+        if (containsSubstring(potentialProfanityWord, currentProfanity, allowedCharactersBetweenWordsArray[i])) {
+            std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << "\n";
             return true;
+
+        }
 
         //If profanity has two adjacent letters swapped
         for (int i = 0; i < potentialProfanityWord.size() - 1; i++) {
             std::swap(potentialProfanityWord[i], potentialProfanityWord[i + 1]);
-            if (containsSubstring(potentialProfanityWord, currentProfanity, 0))
+            if (containsSubstring(potentialProfanityWord, currentProfanity, 0)){
+                std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << "\n";
                 return true;
+
+            }
             std::swap(potentialProfanityWord[i], potentialProfanityWord[i + 1]);
         }
     }
@@ -223,7 +229,7 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
         bool isProfanityFound = findProfanityInAllPossibleWords(inputArray,
             index + inputArray[arrayLocationIndex].first.second, arrayLocationIndex, currentWord);
         if (isProfanityFound)
-            foundProfanity = true;
+            return true;
         (*currentWord).pop_back();
         arrayLocationIndex++;
     }
@@ -234,7 +240,8 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
 void ProfanityFilter::loadWhitelist() {
     std::ifstream whitelistFile("default_lists/whitelist.txt");
     std::string whitelistWord;
-    while (whitelistFile >> whitelistWord)
+    int tmp;
+    while (whitelistFile >> whitelistWord >> tmp)
         whitelistArray.push_back(whitelistWord);
 }
 
@@ -242,8 +249,11 @@ void ProfanityFilter::loadWhitelist() {
 void ProfanityFilter::loadProfanities() {
     std::ifstream profanitiesListFile("default_lists/profanity_list.txt");
     std::string profinityWord;
-    while (profanitiesListFile >> profinityWord)
+    int allowedCharactersBetween;
+    while (profanitiesListFile >> profinityWord >> allowedCharactersBetween) {
         profanitiesArray.push_back(profinityWord);
+        allowedCharactersBetweenWordsArray.push_back(allowedCharactersBetween);
+    }
 }
 
 

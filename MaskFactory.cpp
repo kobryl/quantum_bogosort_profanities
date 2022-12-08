@@ -69,9 +69,11 @@ void MaskFactory::createCacheFile(const char* cacheName, const char* listName) {
 
 	cache << getListModificationTime(listName);
 	
-	while (std::getline(list, textFromFile)) {
+	int temp;
+	while (list >> textFromFile) {
 		cache << "\n";
 		cache << parseStringToMask(textFromFile);
+		list >> temp;		// Skip number of allowed characters between letters
 	}
 
 	cache.close();

@@ -1,107 +1,109 @@
-amicycj
-amicycyj
-arcycz
-bezrucha
-blachuj
-blechuj
-blichuj
-borsuk
-borsuka
-borsuki
-brzegown
-cechuj
-ciagown
-ciotakt
-ciotysi
-cycer
-cych
-cycie
-cycl
-dachuj
-dmuchuj
-dobrucha
-dowcip
-drogown
-dupnegatyw
-dupondius
-dychuj
-epiczk
-fugown
-grucha
-imcipan
-klerucha
-kochuj
-kontrahuj
-kozuchuj
-krucha
-lasuchuj
-leniuchuj
-lochuj
-lugown
-machuj
-mancipatio
-marucha
-minett
-mozgown
-nadrucha
-nansuk
-netsuke
-nieocipie
-noclegown
-obciagnik
-obciago
-obciagu
-odchuchuj
-okutasz
-parucha
-piecuchuj
-pociot
-podupad
-podupasc
-prawdziwk
-principal
-rachuj
-recipe
-rogown
-rozczmuchuj
-rozkutasz
-rozrucha
-ruchaw
-ruchawy
-sagown
-scratchuj
-sklepiczk
-slizgown
-sluchuj
-smigown
-solidarucha
-spryciul
-starucha
-starucha
-strychuj
-sukiem
-sukien
-swietojebliw
-szachuj
-szescioty
-sztagown
-szturchuj
-sztychuj
-trucha
-unierucha
-uruchami
-wachuj
-wiercipie
-wierucha
-wregown
-wtachuj
-wyblechuj
-wyblichuj
-wycierucha
-wycirucha
-wydechuj
-wykichuj
-wytrzachuj
-zakutasz
-zaniechuj
-zdziwk
+amicycj 0
+amicycyj 0
+arcycz 0
+bezrucha 0
+blachuj 0
+blechuj 0
+blichuj 0
+borsuk 0
+borsuka 0
+borsuki 0
+brzegown 0
+cechuj 0
+ciagown 0
+ciotakt 0
+ciotysi 0
+cycer 0
+cych 0
+cycie 0
+cycl 0
+dachuj 0
+dmuchuj 0
+dobrucha 0
+dowcip 0
+drogown 0
+dupli 0
+dupnegatyw 0
+dupondius 0
+dychuj 0
+dziewk 0
+epiczk 0
+fugown 0
+grucha 0
+imcipan 0
+klerucha 0
+kochuj 0
+kontrahuj 0
+kozuchuj 0
+krucha 0
+lasuchuj 0
+leniuchuj 0
+lochuj 0
+lugown 0
+machuj 0
+mancipatio 0
+marucha 0
+minett 0
+mozgown 0
+nadrucha 0
+nansuk 0
+netsuke 0
+nieocipie 0
+noclegown 0
+obciagnik 0
+obciago 0
+obciagu 0
+odchuchuj 0
+okutasz 0
+parucha 0
+piecuchuj 0
+pociot 0
+podupad 0
+podupasc 0
+prawdziwk 0
+principal 0
+rachuj 0
+recipe 0
+rogown 0
+rozczmuchuj 0
+rozkutasz 0
+rozrucha 0
+ruchaw 0
+ruchawy 0
+sagown 0
+scratchuj 0
+sklepiczk 0
+slizgown 0
+sluchuj 0
+smigown 0
+solidarucha 0
+spryciul 0
+starucha 0
+starucha 0
+strychuj 0
+sukiem 0
+sukien 0
+swietojebliw 0
+szachuj 0
+szescioty 0
+sztagown 0
+szturchuj 0
+sztychuj 0
+trucha 0
+unierucha 0
+uruchami 0
+wachuj 0
+wiercipie 0
+wierucha 0
+wregown 0
+wtachuj 0
+wyblechuj 0
+wyblichuj 0
+wycierucha 0
+wycirucha 0
+wydechuj 0
+wykichuj 0
+wytrzachuj 0
+zakutasz 0
+zaniechuj 0
+zdziwk 0

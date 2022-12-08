@@ -1,55 +1,56 @@
-bloldzob
-burdel
-chedoz
-ciota
-cioty
-cipa
-cipe
-cipie
-cipk
-cipo
-cipu
-cipy
-ciul
-cwel
-cyc
-czarnuch
-dupa
-dupci
-dupcz
-dupe
-dupi
-dupn
-dupo
-dupy
-dziwk
-gown
-huj
-hwdp
-jeb
-kurew
-kurw
-kutafon
-kutas
-lachociag
-lodziara
-minet
-obciag
-piczk
-pierdal
-pierdas
-pierdel
-pierdol
-pierduch
-pierdyl
-pierdziel
-pisdzi
-pizd
-pizg
-qrew
-qrw
-rucha
-suka
-suke
-suki
-suko
+bloldzob 10
+burdel 3
+chedoz 2
+ciota 1
+cioty 1
+cipa 0
+cipe 0
+cipie 1
+cipk 0
+cipo 0
+cipu 0
+cipy 0
+ciul 0
+cwel 0
+cyck 0
+czarnuch 5
+dupa 0
+dupci 2
+dupcz 2
+dupe 0
+dupi 0
+dupn 0
+dupo 0
+dupy 0
+dziwk 0
+gown 0
+huj 0
+hwdp 3
+jeb 0
+kubale 4
+kurew 8
+kurw 8
+kutafon 10
+kutas 3
+lachociag 10
+lodziara 10
+minet 0
+obciag 0
+piczk 0
+pierdal 4
+pierdas 4
+pierdel 4
+pierdol 4
+pierduch 4
+pierdyl 4
+pierdziel 4
+pisdzi 3
+pizd 0
+pizg 0
+qrew 8
+qrw 8
+rucha 0
+suka 0
+suke 0
+suki 0
+suko 0
