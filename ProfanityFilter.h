@@ -33,7 +33,7 @@ private:
     bool findProfanityInAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
         int index, int arrayLocationIndex, std::string* currentWord);
 
-
+    void loadProfanities();
 public:
     std::vector<std::string> outputArray;
 
