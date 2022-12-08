@@ -6,10 +6,11 @@
 #include <fstream>
 #include <utility>
 #include <algorithm>
+#include "MaskFactory.h"
 
 class ProfanityFilter {
 private:
-    std::vector<std::string> profanitiesArray, sourceArray, originalData;
+    std::vector<std::string> profanitiesArray, sourceArray, originalData, whitelistArray;
     std::vector<std::vector<std::pair<std::pair<int, int>, char>>> processedArray;
     MaskFactory wordMaskFactory;
 

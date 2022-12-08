@@ -175,9 +175,21 @@ bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& s
 }
 
 
+bool ProfanityFilter::isOnWhitelist(std::string& potentialProfanityWord) {
+    for (int i = 0; i < whitelistArray.size(); i++) {
+        std::string& currentWhitelistedWord = whitelistArray[i];
+        if (!wordMaskFactory.canBeWhitelisted(potentialProfanityWord, i))
+            continue;
+        if (containsSubstring(potentialProfanityWord, currentWhitelistedWord, 0))
+            return true;
+    }
+    return false;
+}
+
+
 bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray) {
-    //if (isOnWhitelist(potentialProfanityWord)) todo
-    //    return false;
+    if (isOnWhitelist(potentialProfanityWord))
+        return false;
     for (int i = 0; i < profanitiesArray.size(); i++) {
         std::string& currentProfanity = profanitiesArray[i];
         if (!wordMaskFactory.canBeProfanity(potentialProfanityWord, i))
@@ -218,8 +230,20 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
     return foundProfanity;
 }
 
-void ProfanityFilter::loadProfanities() {
 
+void ProfanityFilter::loadWhitelist() {
+    std::ifstream whitelistFile("whitelist.txt");
+    std::string whitelistWord;
+    while (whitelistFile >> whitelistWord)
+        whitelistArray.push_back(whitelistWord);
+}
+
+
+void ProfanityFilter::loadProfanities() {
+    std::ifstream profanitiesListFile("profanities.txt");
+    std::string profinityWord;
+    while (profanitiesListFile >> profinityWord)
+        profanitiesArray.push_back(profinityWord);
 }
 
 
@@ -231,8 +255,8 @@ void ProfanityFilter::censorInputtedText() {
     toLowerCases(sourceArray);
     collapseLetters(sourceArray);
     generatePossibleVariationsOfLetters(sourceArray, processedArray);
-
-    profanitiesArray = { "kurwa", "kutas"};
+    loadProfanities();
+    loadWhitelist();
 
     for (int i = 0; i < processedArray.size(); i++) {
         std::string tmp = "";
