@@ -29,18 +29,17 @@ class MainWindow(QMainWindow):
         self.setup()
 
     def setup(self):
+        def __normalizeText(text):
+            return unidecode(text).lower().replace(" ", "")
+
         @Slot()
         def __addFalsePositive():
             try:
-                text = self.__falsePositive.toPlainText()
-                text = text.lower()
-                text = unidecode(text)
-                text = text.replace(" ", "")
+                text = __normalizeText(self.__falsePositive.toPlainText())
                 if DEBUG:
                     print(text)
-                f = open(PATH_TO_WHITELIST, "a")
-                f.write(text + "\n")
-                f.close()
+                with open(PATH_TO_WHITELIST, "a") as f:
+                    f.write(text + "\n")
                 QMessageBox.information(self, "Sukces", "Dodano do białej listy")
                 self.__falsePositive.setPlainText("")
             except Exception as e:
@@ -51,16 +50,11 @@ class MainWindow(QMainWindow):
         @Slot()
         def __addFalseNegative():
             try:
-                text = self.__falseNegative.toPlainText()
-                text = text.lower()
-                text = unidecode(text)
-                text = text.replace(" ", "")
+                text = __normalizeText(self.__falseNegative.toPlainText())
                 if DEBUG:
                     print(text)
-                f = open(PATH_TO_WHITELIST, "a")
-                f = open(PATH_TO_PROFANITIES, "a")
-                f.write(text + "\n")
-                f.close()
+                with open(PATH_TO_PROFANITIES, "a") as f:
+                    f.write(text + "\n")
                 QMessageBox.information(self, "Sukces", "Dodano do czarnej listy")
                 self.__falseNegative.setPlainText("")
             except Exception as e:
@@ -71,23 +65,24 @@ class MainWindow(QMainWindow):
         @Slot()
         def __run():
             timestamp = str(datetime.now().strftime("%Y%m%d%H%M%S"))
-            fileInput = open("input" + timestamp + ".txt", "w")
-            fileInput.write(self.__input.toPlainText())
+            with open("input" + timestamp + ".txt", "w") as fileInput:
+                fileInput.write(self.__input.toPlainText())
             try:
                 os.system(PATH_TO_FILTER + " < input" + timestamp + ".txt > output" + timestamp + ".txt")
                 QMessageBox.information(self, "Filtr wulgaryzmów", "Filtrowanie zakończone pomyślnie.")
-                fileOutput = open("output" + timestamp + ".txt", "r")
-                self.__output.setPlainText(fileOutput.read())
-                fileOutput.close()
-                os.remove("output" + timestamp + ".txt")
-                fileInput.close()
-                os.remove("input" + timestamp + ".txt")
-            except FileNotFoundError as e:
+                with open("output" + timestamp + ".txt", "r") as fileOutput:
+                    self.__output.setPlainText(fileOutput.read())
+            except Exception as e:
                 if DEBUG:
                     print(e)
-                QMessageBox.critical(self, "Filtr wulgaryzmów", "Nie znaleziono pliku wykonywalnego.")
-                fileInput.close()
-                os.remove("input" + timestamp + ".txt")
+                QMessageBox.critical(self, "Filtr wulgaryzmów", "Nie znaleziono pliku wykonywalnego. "
+                                                                "Ponowne pobranie aplikacji może rozwiązać ten problem")
+            finally:
+                try:
+                    os.remove("input" + timestamp + ".txt")
+                    os.remove("output" + timestamp + ".txt")
+                except FileNotFoundError as e:
+                    pass
 
         @Slot()
         def __exit():
