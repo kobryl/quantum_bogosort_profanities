@@ -9,7 +9,7 @@
 
 class ProfanityFilter {
 private:
-    std::vector<std::string> profanitiesArray, sourceArray;
+    std::vector<std::string> profanitiesArray, sourceArray, originalData;
     std::vector < std::vector<std::pair<std::pair<int, int>, char>>> processedArray;
 
     void collapseLetters(std::vector<std::string>& sourceArray);
@@ -31,14 +31,13 @@ private:
     bool generateAllPossibleWordsAndFindProfanity(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
         int index, int arrayLocationIndex, std::string* currentWord);
 
-    void loadInputDataToArray(std::string fileName, std::vector<std::string>& sourceArray);
 
 public:
     std::vector<std::string> outputArray;
 
     void censorInputedText();
 
-    void loadData(std::string fileName);
+    void loadData();
 
     void showCensoredText();
 

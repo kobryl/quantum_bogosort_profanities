@@ -128,15 +128,12 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
     }
 }
 
-void ProfanityFilter::loadInputDataToArray(std::string fileName, std::vector<std::string>& sourceArray) {
-    std::ifstream inputFile(fileName);
+void ProfanityFilter::loadData() {
     std::string inputWord;
-    while (inputFile >> inputWord)
+    while (std::cin >> inputWord) {
         sourceArray.push_back(inputWord);
-}
-
-void ProfanityFilter::loadData(std::string fileName) {
-    loadInputDataToArray(fileName, sourceArray);
+        originalData.push_back(inputWord);
+    }
 }
 
 bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord) {
@@ -220,9 +217,9 @@ void ProfanityFilter::censorInputedText() {
         std::string tmp = "";
         bool isCensored = generateAllPossibleWordsAndFindProfanity(processedArray[i], 0, 0, &tmp);
         if (isCensored)
-            outputArray.push_back(std::string(sourceArray[i].size(), '*'));
+            outputArray.push_back(std::string(originalData[i].size(), '*'));
         else
-            outputArray.push_back(sourceArray[i]);
+            outputArray.push_back(originalData[i]);
     }
 }
 

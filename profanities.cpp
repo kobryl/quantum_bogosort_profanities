@@ -5,7 +5,7 @@
 
 int main() {
 	ProfanityFilter myFilter;
-	myFilter.loadData("dane.txt");
+	myFilter.loadData();
 	myFilter.censorInputedText();
 	myFilter.showCensoredText();
 
