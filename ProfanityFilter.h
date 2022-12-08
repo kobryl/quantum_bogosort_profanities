@@ -12,6 +12,7 @@ class ProfanityFilter {
 private:
     std::vector<std::string> profanitiesArray, sourceArray, originalData, whitelistArray;
     std::vector<std::vector<std::pair<std::pair<int, int>, char>>> processedArray;
+    std::vector<int> allowedCharactersBetweenWordsArray;
     MaskFactory wordMaskFactory;
 
     void collapseLetters(std::vector<std::string>& sourceArray);
