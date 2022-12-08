@@ -1,4 +1,4 @@
-#include "Mask.hpp"
+#include "MaskFactory.hpp"
 
 /*
 *	Implementation of MaskFactory class.

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef Mask_hpp
-#define Mask_hpp
+#ifndef MaskFactory_hpp
+#define MaskFactory_hpp
 
 #include <string>
 #include <fstream>

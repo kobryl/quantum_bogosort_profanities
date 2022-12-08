@@ -18,12 +18,12 @@
     <ClCompile Include="profanities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mask.cpp">
+    <ClCompile Include="MaskFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mask.hpp">
+    <ClInclude Include="MaskFactory.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="cache">
