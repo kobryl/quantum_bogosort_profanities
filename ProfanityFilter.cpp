@@ -101,14 +101,14 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
         {'u', {'u', 'v', 'w'}}
     };
     std::map<std::pair<char, char>, std::vector<char>> possibleDoubleCharacterSwaps = {
-        {{'|', '<'}, {'k', 'e'}},
-        {{'|', '_'}, {'l'}},
+        {{'i', '<'}, {'k', 'e'}},
+        {{'i', '_'}, {'l'}},
         {{'/', '\\'}, {'a'}},
         {{'\\', '/'}, {'v', 'u'}},
-        {{'|', ')'}, {'d'}},
+        {{'i', ')'}, {'d'}},
         {{'(', ')'}, {'o', 'u'}}
     };
-    outputArray.clear();
+    processedArray.clear();
 
     //single characters
     for (int i = 0; i < sourceArray.size(); i++) {
@@ -232,7 +232,7 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
 
 
 void ProfanityFilter::loadWhitelist() {
-    std::ifstream whitelistFile("whitelist.txt");
+    std::ifstream whitelistFile("default_lists/whitelist.txt");
     std::string whitelistWord;
     while (whitelistFile >> whitelistWord)
         whitelistArray.push_back(whitelistWord);
@@ -240,7 +240,7 @@ void ProfanityFilter::loadWhitelist() {
 
 
 void ProfanityFilter::loadProfanities() {
-    std::ifstream profanitiesListFile("profanities.txt");
+    std::ifstream profanitiesListFile("default_lists/profanity_list.txt");
     std::string profinityWord;
     while (profanitiesListFile >> profinityWord)
         profanitiesArray.push_back(profinityWord);
