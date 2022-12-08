@@ -184,7 +184,7 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
 
 }
 
-bool ProfanityFilter::generateAllPossibleWordsAndFindProfanity(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
+bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
     int index, int arrayLocationIndex, std::string* currentWord) {
     if (index > inputArray.back().first.first) {
         return isProfanity((*currentWord), profanitiesArray);
@@ -194,7 +194,7 @@ bool ProfanityFilter::generateAllPossibleWordsAndFindProfanity(std::vector<std::
         arrayLocationIndex++;
     while (arrayLocationIndex < inputArray.size() && inputArray[arrayLocationIndex].first.first == index) {
         (*currentWord) += inputArray[arrayLocationIndex].second;
-        bool isProfanityFound = generateAllPossibleWordsAndFindProfanity(inputArray,
+        bool isProfanityFound = findProfanityInAllPossibleWords(inputArray,
             index + inputArray[arrayLocationIndex].first.second, arrayLocationIndex, currentWord);
         if (isProfanityFound)
             foundProfanity = true;
@@ -204,7 +204,7 @@ bool ProfanityFilter::generateAllPossibleWordsAndFindProfanity(std::vector<std::
     return foundProfanity;
 }
 
-void ProfanityFilter::censorInputedText() {
+void ProfanityFilter::censorInputtedText() {
     removeUnambiguousDiactrics(sourceArray);
     removeSpecialCharactersAndDigits(sourceArray);
     toLowerCases(sourceArray);
@@ -215,7 +215,7 @@ void ProfanityFilter::censorInputedText() {
 
     for (int i = 0; i < processedArray.size(); i++) {
         std::string tmp = "";
-        bool isCensored = generateAllPossibleWordsAndFindProfanity(processedArray[i], 0, 0, &tmp);
+        bool isCensored = findProfanityInAllPossibleWords(processedArray[i], 0, 0, &tmp);
         if (isCensored)
             outputArray.push_back(std::string(originalData[i].size(), '*'));
         else
