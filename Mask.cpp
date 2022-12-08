@@ -4,14 +4,19 @@
 *	Implementation of MaskFactory class.
 *	
 *	Provides an effictient method for preliminary checking whether a word could be a profanity or not, by matching the letters the words consist of.
-*	When a profanity list is modified, a new cache file is created for the class to use. When an instance is initialized, the file is read.
+*	When a word list is modified, a new cache file is created for the class to use. When an instance is initialized, the file is read.
 */
 
 // Default constructor: initializes masks vector.
 // Creates a new cache file to read if the old one is not recent.
 MaskFactory::MaskFactory() {
-	if (!isCacheFileRecent()) createCacheFile();
-	readMaskCacheFile();
+	if (!isCacheFileRecent(PROFANITY_LIST_CACHE_NAME, PROFANITY_LIST_NAME))
+		createCacheFile(PROFANITY_LIST_CACHE_NAME, PROFANITY_LIST_NAME);
+	readMaskCacheFile(PROFANITY_LIST_CACHE_NAME, &profanityMasks);
+
+	if (!isCacheFileRecent(WHITELIST_CACHE_NAME, WHITELIST_NAME))
+		createCacheFile(WHITELIST_CACHE_NAME, WHITELIST_NAME);
+	readMaskCacheFile(WHITELIST_CACHE_NAME, &whitelistMasks);
 }
 
 
@@ -41,32 +46,28 @@ int MaskFactory::parseStringToMask(std::string& word) {
 }
 
 
-// Reads the cache file and inserts masks into the mask vector.
-void MaskFactory::readMaskCacheFile() {
-	std::ifstream list(CACHE_FILE_NAME);
-	std::string textFromFile;
-	std::stringstream sstream;
-	int number;
+// Reads the given list's cache file and inserts masks into the given mask list.
+void MaskFactory::readMaskCacheFile(const char* cacheName, std::vector<int>* masks) {
+	std::ifstream list(cacheName);
+	std::string str;
+	int number = 0;
 
-	std::getline(list, textFromFile);	// Skip the first line, which is a timestamp
-	while (std::getline(list, textFromFile)) {
-		std::stringstream sstream2;
-		sstream2 << textFromFile;
-		sstream2 >> number;
-		profanityMasks.push_back(number);
+	std::getline(list, str);	// Skip the first line, which is a timestamp
+	while (list >> number) {
+		(*masks).push_back(number);
 	}
 
 	list.close();
 }
 
 
-// Creates a cache file and writes masks computed from the profanity list file.
-void MaskFactory::createCacheFile() {
-	std::ofstream cache(CACHE_FILE_NAME);
-	std::ifstream list(PROFANITY_LIST_NAME);
+// Creates a given list's cache file and writes masks computed from the given word file.
+void MaskFactory::createCacheFile(const char* cacheName, const char* listName) {
+	std::ofstream cache(cacheName);
+	std::ifstream list(listName);
 	std::string textFromFile;
 
-	cache << getProfanityListModificationTime();
+	cache << getListModificationTime(listName);
 	
 	while (std::getline(list, textFromFile)) {
 		cache << "\n";
@@ -78,34 +79,31 @@ void MaskFactory::createCacheFile() {
 }
 
 
-// Returns the profanity list's modification time.
-time_t MaskFactory::getProfanityListModificationTime() {
+// Returns the given list's modification time.
+time_t MaskFactory::getListModificationTime(const char* fileName) {
 	time_t time;
 	struct stat attrib;
 	__int64 ltime;
 	_time64(&ltime);
 
-	stat(PROFANITY_LIST_NAME, &attrib);
+	stat(fileName, &attrib);
 	time = attrib.st_mtime;
 
 	return time;
 }
 
 
-// Checks if the cache file is recent. Returns true or false depending on the outcome.
+// Checks if the given list's cache file is recent. Returns true or false depending on the outcome.
 // This is determined by comparing the list's modification time and the recorded modification time in the cache file.
-bool MaskFactory::isCacheFileRecent() {
-	std::ifstream list(CACHE_FILE_NAME);
+bool MaskFactory::isCacheFileRecent(const char* cacheName, const char* listName) {
+	std::ifstream cache(cacheName);
 	std::string textFromFile;
-	std::stringstream sstream;
 	time_t recordedTime;
 
-	std::getline(list, textFromFile);
-	sstream << textFromFile;
-	sstream >> recordedTime;
-	list.close();
+	cache >> recordedTime;
+	cache.close();
 
-	if (recordedTime != getProfanityListModificationTime()) return false;
+	if (recordedTime != getListModificationTime(listName)) return false;
 	return true;
 }
 
@@ -131,8 +129,20 @@ std::vector<int>* MaskFactory::getMasks() {
 // Prints all masks in format: index: binary rep. = letters = int rep.
 // e.g. 30: 00000000010100100000010000000000 = kruw = 5374976
 void MaskFactory::printMasks() {
+	std::cout << "Profanity masks:\n";
 	int i = 0;
 	for (int mask : profanityMasks) {
+		std::bitset<32> bitMask = std::bitset<32>(mask);
+		std::cout << i++ << ": " << bitMask << " = ";
+		for (int i = 0; i < 32; i++) {
+			if (bitMask.test(i)) std::cout << (char)('a' + i);
+		}
+		std::cout << " = " << mask << "\n";
+	}
+
+	std::cout << "\nWhitelist masks:\n";
+	i = 0;
+	for (int mask : whitelistMasks) {
 		std::bitset<32> bitMask = std::bitset<32>(mask);
 		std::cout << i++ << ": " << bitMask << " = ";
 		for (int i = 0; i < 32; i++) {

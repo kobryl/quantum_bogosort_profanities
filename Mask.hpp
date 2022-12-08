@@ -6,7 +6,6 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
-#include <sstream>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/stat.h>
@@ -16,20 +15,23 @@
 
 
 #define PROFANITY_LIST_NAME "profanity_list.txt"
-#define CACHE_FILE_NAME "cache"
+#define WHITELIST_NAME "whitelist.txt"
+#define PROFANITY_LIST_CACHE_NAME "profanity_cache"
+#define WHITELIST_CACHE_NAME "whitelist_cache"
 
 
 /*
 *	Declaration of MaskFactory class.
 *
 *	Provides an effictient method for preliminary checking whether a word could be a profanity or not, by matching the letters the words consist of.
-*	When a profanity list is modified, a new cache file is created for the class to use. When an instance is initialized, the file is read.
+*	When a word list is modified, a new cache file is created for the class to use. When an instance is initialized, the file is read.
 */
 
 
 class MaskFactory {
 private:
 	std::vector<int> profanityMasks;
+	std::vector<int> whitelistMasks;
 
 	// Returns true if two masks match, false otherwise.
 	bool doMasksMatch(int firstMask, int secondMask);
@@ -37,17 +39,17 @@ private:
 	// Returns a mask generated from a given word.
 	int parseStringToMask(std::string& word);
 
-	// Reads the cache file and inserts masks into the mask vector.
-	void readMaskCacheFile();
+	// Reads the given list's cache file and inserts masks into the given mask list.
+	void readMaskCacheFile(const char* cacheName, std::vector<int>* masks);
 
-	// Creates a cache file and writes masks computed from the profanity list file.
-	void createCacheFile();
+	// Creates a given list's cache file and writes masks computed from the given word file.
+	void createCacheFile(const char* cacheName, const char* listName);
 
-	// Returns the profanity list's modification time.
-	time_t getProfanityListModificationTime();
+	// Returns the given list's modification time.
+	time_t getListModificationTime(const char* fileName);
 
-	// Checks if the cache file is recent. Returns true or false depending on the outcome.
-	bool isCacheFileRecent();
+	// Checks if the given list's cache file is recent. Returns true or false depending on the outcome.
+	bool isCacheFileRecent(const char* cacheName, const char* listName);
 
 public:
 	// Default constructor: initializes masks vector.
@@ -56,11 +58,12 @@ public:
 	// Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
 	bool canBeProfanity(std::string& word, int profanityIndex);
 
+
 	// Debug functions
 	// Returns a pointer to a vector of all of the masks.
 	std::vector<int>* getMasks();
 
-	// Prints all masks in format: binary rep. = letters = int rep.
+	// Prints all masks in format: index: binary rep. = letters = int rep.
 	void printMasks();
 };
 
