@@ -218,6 +218,10 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
     return foundProfanity;
 }
 
+void ProfanityFilter::loadProfanities() {
+
+}
+
 
 void ProfanityFilter::censorInputtedText() {
     wordMaskFactory = MaskFactory();
