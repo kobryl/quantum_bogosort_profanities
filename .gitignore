@@ -4,6 +4,4 @@ Debug
 build
 __pycache__
 *.spec
-profanity_cache
-whitelist_cache
-*_debug.txt
+*_cache
