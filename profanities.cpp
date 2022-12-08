@@ -164,9 +164,51 @@ void generateAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>&
     }
 }
 
+const int possibleDifferencesInWord = 2;
+
+bool containsSubstring(std::string& checkedWord, std::string& substringWord) {
+    for (int i = 0; i < checkedWord.size() - substringWord.size() + 1; i++) {
+        int currentPossibleDifferences = possibleDifferencesInWord;
+        int idx = i;
+        bool found = true;
+        for (int j = 0; j < substringWord.size(); j++) {
+            while (idx + j < checkedWord.size() && substringWord[j] != checkedWord[idx + j]) {
+                idx++;
+                currentPossibleDifferences--;
+                if (currentPossibleDifferences < 0) {
+                    found = false;
+                    break;
+                }
+            }
+            if (currentPossibleDifferences < 0 || idx + j > checkedWord.size()) {
+                found = false;
+                break;
+            }
+        }
+        if (found)
+            return true;
+    }
+    return false;
+}
+
+bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray) {
+    //if (isOnWhitelist(potentialProfanityWord)) todo
+    //    return false;
+    for (int i = 0; i < profanitiesArray.size(); i++) {
+        std::string& currentProfanity = profanitiesArray[i];
+        //TODO
+        //if (!maskFactory.canBeProfanity(i, potentialProfanityWord))  
+        //    return false;
+        if (containsSubstring(potentialProfanityWord, currentProfanity))
+            return true;
+    }
+    return false;
+
+}
+
 int main() {
-    //std::cout << canBeProfanity(xd);
-    std::vector<std::string> sourceArray;
+    //std::vector<std::string> sourceArray;
+    std::vector<std::string> profanitiesArray = { "kurwa" };
     std::vector < std::vector<std::pair<std::pair<int, int>, char>>> outputArray;
     loadInputDataToArray("dane.txt", sourceArray);
     removeUnambiguousDiactrics(sourceArray);
@@ -175,8 +217,13 @@ int main() {
     collapseLetters(sourceArray);
     //printArray(sourceArray);
     generatePossibleVariationsOfLetters(sourceArray, outputArray);
-
+    
     for (int i = 0; i < outputArray.size(); i++) {
         generateAllPossibleWords(outputArray[i], 0, 0, "");
     }
+
+    std::string word1 = "tokurwato", word2 = "tokurewato", word3="uwu luv";
+    std::cout << isProfanity(word1, profanitiesArray) << "\n";
+    std::cout << isProfanity(word2, profanitiesArray) << "\n";
+    std::cout << isProfanity(word3, profanitiesArray) << "\n";
 }
