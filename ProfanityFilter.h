@@ -6,7 +6,6 @@
 #include <fstream>
 #include <utility>
 #include <algorithm>
-#include "Mask.hpp"
 
 class ProfanityFilter {
 private:

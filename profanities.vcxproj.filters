@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MaskFactory.hpp">
+    <ClInclude Include="MaskFactory.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="cache">
