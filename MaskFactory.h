@@ -60,6 +60,7 @@ public:
 
 
 	// Debug functions
+
 	// Returns a pointer to a vector of all of the masks.
 	std::vector<int>* getMasks();
 

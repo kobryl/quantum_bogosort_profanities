@@ -6,7 +6,7 @@
 int main() {
 	ProfanityFilter myFilter;
 	myFilter.loadData();
-	myFilter.censorInputedText();
+	myFilter.censorInputtedText();
 	myFilter.showCensoredText();
 
 }

@@ -1,5 +1,6 @@
 #include "ProfanityFilter.h"
 
+
 void ProfanityFilter::collapseLetters(std::vector<std::string>& sourceArray) {
     std::string tmpString;
     for (int i = 0; i < sourceArray.size(); i++) {
@@ -12,8 +13,8 @@ void ProfanityFilter::collapseLetters(std::vector<std::string>& sourceArray) {
         sourceArray[i] = tmpString;
         tmpString = "";
     }
-    return;
 }
+
 
 void ProfanityFilter::removeSpecialCharactersAndDigits(std::vector<std::string>& sourceArray) {
     std::map<char, char> specialCharactersSwapMap = {
@@ -23,10 +24,14 @@ void ProfanityFilter::removeSpecialCharactersAndDigits(std::vector<std::string>&
         {'3', 'e'},
         {'4', 'a'},
         {'5', 's'},
-        {'7', 'z'},
+        {'6', 'b'},
+        {'7', 't'},
+        {'8', 'b'},
         {'!', 'i'},
         {'@', 'a'},
         {'$', 's'},
+        {'#', 'h'},
+        {'|', 'i'}
     };
     std::string tmpString;
     for (int i = 0; i < sourceArray.size(); i++) {
@@ -40,8 +45,8 @@ void ProfanityFilter::removeSpecialCharactersAndDigits(std::vector<std::string>&
         sourceArray[i] = tmpString;
         tmpString = "";
     }
-    return;
 }
+
 
 void ProfanityFilter::toLowerCases(std::vector<std::string>& sourceArray) {
     for (int i = 0; i < sourceArray.size(); i++) {
@@ -51,6 +56,7 @@ void ProfanityFilter::toLowerCases(std::vector<std::string>& sourceArray) {
         }
     }
 }
+
 
 void ProfanityFilter::removeUnambiguousDiactrics(std::vector<std::string>& sourceArray) {
     std::map<std::pair<int, int>, char> diactricsSwapMap = {
@@ -79,12 +85,11 @@ void ProfanityFilter::removeUnambiguousDiactrics(std::vector<std::string>& sourc
         sourceArray[i] = tmpString;
         tmpString = "";
     }
-    return;
 }
 
 
 void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::string>& sourceArray,
-    std::vector < std::vector<std::pair<std::pair<int, int>, char>>>& outputArray) {
+    std::vector<std::vector<std::pair<std::pair<int, int>, char>>>& outputArray) {
     std::map<char, std::vector<char>> possibleSingleCharacterSwaps = {
         {'i', {'l', 'i'}},
         {'l', {'i', 'l'}},
@@ -95,13 +100,18 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
         {'u', {'u', 'v', 'w'}}
     };
     std::map<std::pair<char, char>, std::vector<char>> possibleDoubleCharacterSwaps = {
-        {{'|', '<'}, {'k', 'e'}}
+        {{'|', '<'}, {'k', 'e'}},
+        {{'|', '_'}, {'l'}},
+        {{'/', '\\'}, {'a'}},
+        {{'\\', '/'}, {'v', 'u'}},
+        {{'|', ')'}, {'d'}},
+        {{'(', ')'}, {'o', 'u'}}
     };
     outputArray.clear();
 
     //single characters
     for (int i = 0; i < sourceArray.size(); i++) {
-        std::vector < std::pair<std::pair<int, int>, char>> possibleLettersInWord;
+        std::vector<std::pair<std::pair<int, int>, char>> possibleLettersInWord;
         for (int j = 0; j < sourceArray[i].size(); j++) {
             char currentCharacterInWord = sourceArray[i][j];
             if (possibleSingleCharacterSwaps.find(currentCharacterInWord) != possibleSingleCharacterSwaps.end()) {
@@ -114,7 +124,7 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
         }
 
         //double characters
-        std::vector < std::pair<std::pair<int, int>, char>> possibleDoubleLettersInWord;
+        std::vector<std::pair<std::pair<int, int>, char>> possibleDoubleLettersInWord;
         for (int j = 1; j < sourceArray[i].size(); j++) {
             std::pair<char, char> currentCharactersInWord = { sourceArray[i][j - 1], sourceArray[i][j] };
             if (possibleDoubleCharacterSwaps.find(currentCharactersInWord) != possibleDoubleCharacterSwaps.end()) {
@@ -128,6 +138,7 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
     }
 }
 
+
 void ProfanityFilter::loadData() {
     std::string inputWord;
     while (std::cin >> inputWord) {
@@ -135,6 +146,7 @@ void ProfanityFilter::loadData() {
         originalData.push_back(inputWord);
     }
 }
+
 
 bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord) {
     for (int i = 0; i < (int)checkedWord.size() - (int)substringWord.size() + 1; i++) {
@@ -161,6 +173,7 @@ bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& s
     return false;
 }
 
+
 bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray) {
     //if (isOnWhitelist(potentialProfanityWord)) todo
     //    return false;
@@ -184,6 +197,7 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
 
 }
 
+
 bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
     int index, int arrayLocationIndex, std::string* currentWord) {
     if (index > inputArray.back().first.first) {
@@ -204,6 +218,7 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
     return foundProfanity;
 }
 
+
 void ProfanityFilter::censorInputtedText() {
     removeUnambiguousDiactrics(sourceArray);
     removeSpecialCharactersAndDigits(sourceArray);
@@ -222,6 +237,7 @@ void ProfanityFilter::censorInputtedText() {
             outputArray.push_back(originalData[i]);
     }
 }
+
 
 void ProfanityFilter::showCensoredText() {
     for (std::string word : outputArray) {

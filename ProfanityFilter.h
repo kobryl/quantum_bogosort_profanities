@@ -10,7 +10,7 @@
 class ProfanityFilter {
 private:
     std::vector<std::string> profanitiesArray, sourceArray, originalData;
-    std::vector < std::vector<std::pair<std::pair<int, int>, char>>> processedArray;
+    std::vector<std::vector<std::pair<std::pair<int, int>, char>>> processedArray;
 
     void collapseLetters(std::vector<std::string>& sourceArray);
 
@@ -21,26 +21,24 @@ private:
     void removeUnambiguousDiactrics(std::vector<std::string>& sourceArray);
 
     void generatePossibleVariationsOfLetters(std::vector<std::string>& sourceArray,
-        std::vector < std::vector<std::pair<std::pair<int, int>, char>>>& outputArray);
-
+        std::vector<std::vector<std::pair<std::pair<int, int>, char>>>& outputArray);
 
     bool containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord);
 
     bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray);
 
-    bool generateAllPossibleWordsAndFindProfanity(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
+    bool isOnWhitelist(std::string& potentialProfanityWord);
+
+    bool findProfanityInAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
         int index, int arrayLocationIndex, std::string* currentWord);
 
 
 public:
     std::vector<std::string> outputArray;
 
-    void censorInputedText();
+    void censorInputtedText();
 
     void loadData();
 
     void showCensoredText();
-
-
-
 };
