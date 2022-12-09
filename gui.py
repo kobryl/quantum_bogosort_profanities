@@ -29,6 +29,29 @@ class MainWindow(QMainWindow):
         self.setup()
 
     def setup(self):
+        def __buttonFactory(text, x, y, function):
+            btn = QPushButton(text, self)
+            btn.move(x, y)
+            btn.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
+            btn.clicked.connect(function)
+            btn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+            return btn
+
+        def __labelFactory(text, x, y):
+            label = QLabel(text, self)
+            label.move(x, y)
+            label.resize(LABEL_WIDTH, LABEL_HEIGHT)
+            return label
+
+        def __textAreaFactory(textArea, x, y, placeholder, width, height):
+            textArea.move(x, y)
+            textArea.setPlaceholderText(placeholder)
+            textArea.resize(width, height)
+            textArea.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+            textArea.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
+
+
+
         def __normalizeText(text):
             return unidecode(text).lower().replace(" ", "")
 
@@ -81,7 +104,7 @@ class MainWindow(QMainWindow):
                 try:
                     os.remove("input" + timestamp + ".txt")
                     os.remove("output" + timestamp + ".txt")
-                except FileNotFoundError as e:
+                except FileNotFoundError:
                     pass
 
         @Slot()
@@ -98,81 +121,35 @@ class MainWindow(QMainWindow):
             self.__aboutWindow = AboutWindow()
             self.__aboutWindow.show()
 
-        self.__labelInput.setText("Tekst wejściowy:")
-        self.__labelInput.move(5, 10)
-        self.__labelInput.resize(LABEL_WIDTH, LABEL_HEIGHT)
+        # Labels
+        self.__labelInput = __labelFactory("Tekst wejściowy:", 5, 10)
+        self.__labelOutput = __labelFactory("Tekst wyjściowy:", 5, 210)
+        self.__labelFalseNegative = __labelFactory("Filtr nie wykrył wulgaryzmu? Dodaj go do listy:",
+                                                   TEXTAREA_WIDTH + 15, 120)
+        self.__labelFalsePositive = __labelFactory("Filtr ocenzurował niewulgarne słowo? Dodaj je do wyjątków:",
+                                                   TEXTAREA_WIDTH + 15, 10)
 
-        self.__input.move(5, 40)
-        self.__input.resize(TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
-        self.__input.setPlaceholderText("Wpisz tekst do przefiltrowania...")
-        self.__input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.__input.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
+        # Text Areas
+        __textAreaFactory(self.__input, 5, 40, "Wpisz tekst do przefiltrowania...", TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
+        __textAreaFactory(self.__output, 5, 240, "Tekst po przefiltrowaniu...", TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
+        __textAreaFactory(self.__falsePositive, TEXTAREA_WIDTH + 15, 40, "Wpisz nowy wyjątek...",
+                          TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
+        __textAreaFactory(self.__falseNegative, TEXTAREA_WIDTH + 15, 150, "Wpisz niewykryty wulgaryzm...",
+                          TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
 
-        runButton = QPushButton("Uruchom", self)
-        runButton.move((WINDOW_WIDTH - 10) / 2 - BUTTON_WIDTH, 200)
-        runButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        runButton.clicked.connect(__run)
-        runButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-
-        self.__labelOutput.setText("Tekst wyjściowy:")
-        self.__labelOutput.move(5, 210)
-        self.__labelOutput.resize(LABEL_WIDTH, LABEL_HEIGHT)
-
-        self.__output.move(5, 240)
-        self.__output.resize(TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
-        self.__output.setPlaceholderText("Tekst po przefiltrowaniu...")
-        self.__output.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.__output.setReadOnly(True)
 
-        self.__labelFalsePositive.setText("Filtr ocenzurował niewulgarne słowo? Dodaj je do wyjątków:")
-        self.__labelFalsePositive.move(TEXTAREA_WIDTH + 15, 10)
-        self.__labelFalsePositive.resize(LABEL_WIDTH, LABEL_HEIGHT)
-
-        self.__falsePositive.move(TEXTAREA_WIDTH + 15, 40)
-        self.__falsePositive.resize(TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
-        self.__falsePositive.setPlaceholderText("Wpisz nowy wyjątek...")
-        self.__input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.__input.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
-
-        falsePositiveButton = QPushButton("Dodaj do wyjątków", self)
-        falsePositiveButton.move(TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH, 80)
-        falsePositiveButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        falsePositiveButton.clicked.connect(__addFalsePositive)
-        falsePositiveButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-
-        self.__labelFalseNegative.setText("Filtr nie wykrył wulgaryzmu? Dodaj go do listy:")
-        self.__labelFalseNegative.move(TEXTAREA_WIDTH + 15, 120)
-        self.__labelFalseNegative.resize(LABEL_WIDTH, LABEL_HEIGHT)
-
-        self.__falseNegative.move(TEXTAREA_WIDTH + 15, 150)
-        self.__falseNegative.resize(TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
-        self.__falseNegative.setPlaceholderText("Wpisz niewykryty wulgaryzm...")
-        self.__input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.__input.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
-
-        falseNegativeButton = QPushButton("Dodaj do wulgaryzmów", self)
-        falseNegativeButton.move(TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH, 190)
-        falseNegativeButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        falseNegativeButton.clicked.connect(__addFalseNegative)
-        falseNegativeButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-
-        helpButton = QPushButton("Pomoc", self)
-        helpButton.move(5, WINDOW_HEIGHT - BUTTON_HEIGHT - 5)
-        helpButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        helpButton.clicked.connect(__help)
-        helpButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-
-        aboutButton = QPushButton("O programie", self)
-        aboutButton.move(165, WINDOW_HEIGHT - BUTTON_HEIGHT - 5)
-        aboutButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        aboutButton.clicked.connect(__about)
-        aboutButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-
-        exitButton = QPushButton("Wyjście", self)
-        exitButton.move(TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH, WINDOW_HEIGHT - BUTTON_HEIGHT - 5)
-        exitButton.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
-        exitButton.clicked.connect(__exit)
-        exitButton.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        # Buttons
+        runButton = __buttonFactory("Uruchom", (WINDOW_WIDTH - 10) / 2 - BUTTON_WIDTH, 200, __run)
+        falsePositiveButton = __buttonFactory("Dodaj do wyjątków", TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH,
+                                              80, __addFalsePositive)
+        falseNegativeButton = __buttonFactory("Dodaj do wulgaryzmów",
+                                              TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH,
+                                              190, __addFalseNegative)
+        helpButton = __buttonFactory("Pomoc", 5, WINDOW_HEIGHT - BUTTON_HEIGHT - 5, __help)
+        aboutButton = __buttonFactory("O programie", 165, WINDOW_HEIGHT - BUTTON_HEIGHT - 5, __about)
+        exitButton = __buttonFactory("Wyjście", TEXTAREA_WIDTH + 15 + TEXTINPUT_WIDTH - BUTTON_WIDTH,
+                                     WINDOW_HEIGHT - BUTTON_HEIGHT - 5, __exit)
 
         self.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
 
