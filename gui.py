@@ -7,6 +7,7 @@ from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
     QMainWindow, QMessageBox, QWidget
 from unidecode import unidecode
+from collections.abc import Callable
 
 from constants import *
 
@@ -35,7 +36,7 @@ class MainWindow(QMainWindow):
         self.setup()
 
     def setup(self):
-        def __buttonFactory(text: str, x: int, y: int, function: Slot) -> QPushButton:
+        def __buttonFactory(text: str, x: int, y: int, function: Callable[[], None]) -> QPushButton:
             """
             Creates a button with the given text, position and function.
             :param text: Text on the button.
