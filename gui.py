@@ -50,8 +50,6 @@ class MainWindow(QMainWindow):
             textArea.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
             textArea.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
 
-
-
         def __normalizeText(text):
             return unidecode(text).lower().replace(" ", "")
 
