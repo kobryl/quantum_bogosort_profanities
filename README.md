@@ -33,3 +33,7 @@ Aby uruchomić program w trybie graficznym należy uruchomić plik wykonywalny "
 
 - Qt6
 - Unidecode
+
+### Właściwy program (C++)
+
+Lorem ipsum dolor sit amet
