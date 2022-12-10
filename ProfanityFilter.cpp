@@ -67,7 +67,7 @@ void ProfanityFilter::removeUnambiguousDiactrics(std::vector<std::string>& sourc
         {{-59, -126}, 'l'},
         {{-59, -68}, 'z'},
         {{-59, -70}, 'z'},
-        {{-61, -77}, 'ó'},
+        {{-61, -77}, 'u'},
         {{-60, -121}, 'c'},
         {{-59, -124}, 'n'}
     };
@@ -94,11 +94,10 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
     std::map<char, std::vector<char>> possibleSingleCharacterSwaps = {
         {'i', {'l', 'i'}},
         {'l', {'i', 'l'}},
-        {'ó', {'o', 'u'}},
         {'v', {'v', 'u', 'w'}},
         {'z', {'z', 's'}},
         {'s', {'s', 'z'}},
-        {'u', {'u', 'v'}}
+        {'u', {'u', 'v', 'o'}}
     };
     std::map<std::pair<char, char>, std::vector<char>> possibleDoubleCharacterSwaps = {
         {{'i', '<'}, {'k', 'e'}},
@@ -150,8 +149,8 @@ void ProfanityFilter::loadData() {
 
 
 bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord,
-    int allowedCharactersInFront, int allowedCharactersInBack) {
-    int startIndex = std::max(0, int((int)checkedWord.size() - substringWord.size() - allowedCharactersInBack));
+    int allowedCharactersInFront, int allowedCharactersInBack, int skip) {
+    int startIndex = std::max(skip, skip + int((int)checkedWord.size() - substringWord.size() - allowedCharactersInBack));
     int endIndex = std::min((int)checkedWord.size() - (int)substringWord.size() + 1, allowedCharactersInFront + 1);
     for (int i = startIndex; i < endIndex; i++) {
         int currentAllowedCharactersBetweenInWord = possibleCharactersBetweenInWord;
@@ -194,7 +193,7 @@ bool ProfanityFilter::isOnWhitelist(std::string& potentialProfanityWord) {
 }
 
 
-bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray) {
+bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip) {
     for (int i = 0; i < profanitiesArray.size(); i++) {
         std::string& currentProfanity = profanitiesArray[i];
         int charactersBeforeWord = allowedProfanityCharactersBeforeAndAfterWord[i].first;
@@ -204,7 +203,7 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
         if (charactersAfterWord + charactersBeforeWord + currentProfanity.size() < potentialProfanityWord.size())
             continue;
         if (containsSubstring(potentialProfanityWord, currentProfanity, allowedCharactersBetweenWordsArray[i],
-            charactersBeforeWord, charactersAfterWord)) {
+            charactersBeforeWord, charactersAfterWord, skip)) {
             std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << " originalnie:"<<originalData[originalIndex] << "\n";
             return true;
         }
@@ -212,7 +211,7 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
         //If profanity has two adjacent letters swapped
         for (int i = 0; i < potentialProfanityWord.size() - 1; i++) {
             std::swap(potentialProfanityWord[i], potentialProfanityWord[i + 1]);
-            if (containsSubstring(potentialProfanityWord, currentProfanity, 0, charactersBeforeWord, charactersAfterWord)) {
+            if (containsSubstring(potentialProfanityWord, currentProfanity, 0, charactersBeforeWord, charactersAfterWord, skip)) {
 std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << " originalnie:"<<originalData[originalIndex] << "\n";
                 return true;
             }
@@ -282,11 +281,52 @@ void ProfanityFilter::censorInputtedText() {
 
     for (int i = 0; i < processedArray.size(); i++) {
         std::string tmp = "";
-        originalIndex = i;
         bool isCensored = false;
         if(!isOnWhitelist(originalData[i]))
         isCensored = findProfanityInAllPossibleWords(processedArray[i], 0, 0, &tmp);
         if (isCensored)
+            isCensoredArray.push_back(true);
+        else
+            isCensoredArray.push_back(false);
+    }
+    int maxLengthOfProfanity = 0;
+    for (int i = 0; i < profanitiesArray.size(); i++)
+        maxLengthOfProfanity = std::max(maxLengthOfProfanity, int(profanitiesArray[i].size()));
+
+    std::string currentWordWithSkippedSpaces = "";
+    int currentFrontIndex = 0, skip = 0, currentWordLength = 0;
+    for (int i = 0; i < processedArray.size(); i++) {
+        if (isCensoredArray[i]) {
+            continue;
+        }
+        currentWordWithSkippedSpaces += sourceArray[i];
+        currentWordLength += sourceArray[i].size();
+        while (currentWordLength > maxLengthOfProfanity) {
+            if (!isCensoredArray[currentFrontIndex]) {
+                skip += sourceArray[currentFrontIndex].size();
+                currentWordLength -= sourceArray[i].size();
+            }
+            currentFrontIndex++;
+        }
+        //to do
+//poprawna obluga masek whitelisty + profanity
+        bool isCensored = false;
+        if (!isOnWhitelist(currentWordWithSkippedSpaces))
+            isCensored = isProfanity(currentWordWithSkippedSpaces, profanitiesArray, skip);
+        if (isCensored) {
+            while (currentFrontIndex <= i) {
+                if (!isCensoredArray[currentFrontIndex]) {
+                    isCensoredArray[currentFrontIndex] = true;
+                    skip += sourceArray[currentFrontIndex].size();
+                    currentWordLength -= sourceArray[i].size();
+                }
+                currentFrontIndex++;
+            }
+        }
+    }
+
+    for (int i = 0; i < isCensoredArray.size(); i++) {
+        if (isCensoredArray[i])
             outputArray.push_back(std::string(originalData[i].size(), '*'));
         else
             outputArray.push_back(originalData[i]);
