@@ -1,154 +1,153 @@
-amicycj 0
-amicycyj 0
-arcycz 0
-bezrucha 0
-blachuj 0
-blechuj 0
-blichuj 0
-borsuk 0
-borsuka 0
-borsuki 0
-brzegown 0
-brzuch 0
-cechuj 0
-ciagown 0
-ciepl 0
-ciotakt 0
-ciotka 0
-ciotysi 0
-cwierc 0
-cycer 0
-cych 0
-cycie 0
-cycl 0
-czuka 0
-czuke 0
-czuki 0
-czuko 0
-dachuj 0
-dmuchuj 0
-dobrucha 0
-dowcip 0
-drogown 0
-druzk 0
-dupli 0
-dupnegatyw 0
-dupondius 0
-dychuj 0
-dyskur 0
-dziewk 0
-dziwak 0
-epiczk 0
-francusk 0
-fugown 0
-glown 0
-grucha 0
-imcipan 0
-jaskolk 0
-klerucha 0
-kochuj 0
-konfit 0
-kontrahuj 0
-kozuchuj 0
-krowk 0
-krucha 0
-kuchar 0
-kurantow 0
-kuropatw 0
-lasuchuj 0
-leniuchuj 0
-lochuj 0
-lugown 0
-luska 0
-machuj 0
-mancipatio 0
-marucha 0
-minett 0
-mozgown 0
-muskal 0
-nadrucha 0
-nansuk 0
-netsuke 0
-nieocipie 0
-noclegown 0
-nozk 0
-obciagnik 0
-obciago 0
-obciagu 0
-odchuchuj 0
-okutasz 0
-oszuka 0
-parucha 0
-piecuchuj 0
-pluska 0
-pociot 0
-podupad 0
-podupasc 0
-prawdziwk 0
-principal 0
-prusk 0
-purchawk 0
-rachuj 0
-recipe 0
-rogown 0
-rozczmuchuj 0
-rozka 0
-rozke 0
-rozki 0
-rozko 0
-rozkutasz 0
-rozrucha 0
-ruchaw 0
-ruchawy 0
-rusk 0
-sagown 0
-scratchuj 0
-siejb 0
-skala 0
-sklepiczk 0
-slizgown 0
-sluchuj 0
-smigown 0
-smukl 0
-solidarucha 0
-spryciul 0
-starucha 0
-starucha 0
-strychuj 0
-stuka 0
-sukiem 0
-sukien 0
-sukman 0
-sukn 0
-swietojebliw 0
-szachuj 0
-szescioty 0
-szkol 0
-szku! 0
-sztagown 0
-sztuk 0
-szturchuj 0
-sztychuj 0
-szuka 0
-szuki 0
-szuku 0
-trucha 0
-unierucha 0
-uruchami 0
-wachuj 0
-wiercipie 0
-wierucha 0
-wregown 0
-wtachuj 0
-wyblechuj 0
-wyblichuj 0
-wycierucha 0
-wycirucha 0
-wydechuj 0
-wykichuj 0
-wytrzachuj 0
-zakutasz 0
-zaniechuj 0
-zdziwk 0
-zolkl 0
-zolkn 0
+amicycj 2 4
+amicycyj 2 4
+arcycz 1 11
+bezrucha 3 5
+blachuj 4 4
+blechuj 4 4
+blichuj 4 4
+borsuk 4 6
+brzegown 4 4
+brzuch 4 4
+cechuj 4 6
+ciagown 4 4
+ciepl 5 8
+ciotakt 5 5
+ciotk 3 5
+ciotun 3 3
+ciotysi 5 8
+cwierc 4 6
+cycer 2 4
+cych 15 4
+cycie 10 3
+cycl 7 4
+czuka 0 0
+czuke 0 0
+czuki 0 0
+czuko 0 0
+dachuj 0 0
+dmuchuj 0 0
+dobrucha 0 0
+dowcip 0 0
+drogown 0 0
+druzk 0 0
+dupli 0 0
+dupnegatyw 0 0
+dupondius 0 0
+dychuj 0 0
+dyskur 0 0
+dziewk 0 0
+dziwak 0 0
+epiczk 0 0
+francusk 0 0
+fugown 0 0
+glown 0 0
+grucha 0 0
+imcipan 0 0
+jaskolk 0 0
+klerucha 0 0
+kochuj 0 0
+konfit 0 0
+kontrahuj 0 0
+kozuchuj 0 0
+krowk 0 0
+krucha 0 0
+kuchar 0 0
+kurantow 0 0
+kuropatw 0 0
+lasuchuj 0 0
+leniuchuj 0 0
+lochuj 0 0
+lugown 0 0
+luska 0 0
+machuj 0 0
+mancipatio 0 0
+marucha 0 0
+minett 0 0
+mozgown 0 0
+muskal 0 0
+nadrucha 0 0
+nansuk 0 0
+netsuke 0 0
+nieocipie 0 0
+noclegown 0 0
+nozk 0 0
+obciagnik 0 0
+obciago 0 0
+obciagu 0 0
+odchuchuj 0 0
+okutasz 0 0
+oszuka 0 0
+parucha 0 0
+piecuchuj 0 0
+pluska 0 0
+pociot 0 0
+podupad 0 0
+podupasc 0 0
+prawdziwk 0 0
+principal 0 0
+prusk 0 0
+purchawk 0 0
+rachuj 0 0
+recipe 0 0
+rogown 0 0
+rozczmuchuj 0 0
+rozka 0 0
+rozke 0 0
+rozki 0 0
+rozko 0 0
+rozkutasz 0 0
+rozrucha 0 0
+ruchaw 0 0
+ruchawy 0 0
+rusk 0 0
+sagown 0 0
+scratchuj 0 0
+siejb 0 0
+skala 0 0
+sklepiczk 0 0
+slizgown 0 0
+sluchuj 0 0
+smigown 0 0
+smukl 0 0
+solidarucha 0 0
+spryciul 0 0
+starucha 0 0
+starucha 0 0
+strychuj 0 0
+stuka 0 0
+sukiem 0 0
+sukien 0 0
+sukman 0 0
+sukn 0 0
+swietojebliw 0 0
+szachuj 0 0
+szescioty 0 0
+szkol 0 0
+szku! 0 0
+sztagown 0 0
+sztuk 0 0
+szturchuj 0 0
+sztychuj 0 0
+szuka 0 0
+szuki 0 0
+szuku 0 0
+trucha 0 0
+unierucha 0 0
+uruchami 0 0
+wachuj 0 0
+wiercipie 0 0
+wierucha 0 0
+wregown 0 0
+wtachuj 0 0
+wyblechuj 0 0
+wyblichuj 0 0
+wycierucha 0 0
+wycirucha 0 0
+wydechuj 0 0
+wykichuj 0 0
+wytrzachuj 0 0
+zakutasz 0 0
+zaniechuj 0 0
+zdziwk 0 0
+zolkl 0 0
+zolkn 0 0

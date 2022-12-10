@@ -10,12 +10,16 @@
 // Default constructor: initializes masks vector.
 // Creates a new cache file to read if the old one is not recent.
 MaskFactory::MaskFactory() {
+	// Profanity masks initialization (cache creation if needed)
 	if (!isCacheFileRecent(PROFANITY_LIST_CACHE_NAME, PROFANITY_LIST_NAME))
-		createCacheFile(PROFANITY_LIST_CACHE_NAME, PROFANITY_LIST_NAME);
+		// 3 parameters: allowed characters between letters of a word, allowed characters before word and after a word
+		createCacheFile(PROFANITY_LIST_CACHE_NAME, PROFANITY_LIST_NAME, 3);	
 	readMaskCacheFile(PROFANITY_LIST_CACHE_NAME, &profanityMasks);
 
+	// Whitelist masks initialization (cache creation if needed)
 	if (!isCacheFileRecent(WHITELIST_CACHE_NAME, WHITELIST_NAME))
-		createCacheFile(WHITELIST_CACHE_NAME, WHITELIST_NAME);
+		// 2 parameters: allowed characters before a word and after a word
+		createCacheFile(WHITELIST_CACHE_NAME, WHITELIST_NAME, 2);
 	readMaskCacheFile(WHITELIST_CACHE_NAME, &whitelistMasks);
 }
 
@@ -62,7 +66,7 @@ void MaskFactory::readMaskCacheFile(const char* cacheName, std::vector<int>* mas
 
 
 // Creates a given list's cache file and writes masks computed from the given word file.
-void MaskFactory::createCacheFile(const char* cacheName, const char* listName) {
+void MaskFactory::createCacheFile(const char* cacheName, const char* listName, int irrelevantParamsAfterWord) {
 	std::ofstream cache(cacheName);
 	std::ifstream list(listName);
 	std::string textFromFile;
@@ -73,7 +77,8 @@ void MaskFactory::createCacheFile(const char* cacheName, const char* listName) {
 	while (list >> textFromFile) {
 		cache << "\n";
 		cache << parseStringToMask(textFromFile);
-		list >> temp;		// Skip number of allowed characters between letters
+		for (int i = 0; i < irrelevantParamsAfterWord; i++)
+			list >> temp;		// Skip an irrelevant parameter, such as allowed characters between word letters.
 	}
 
 	cache.close();
