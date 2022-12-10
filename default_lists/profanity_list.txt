@@ -1,55 +1,57 @@
-bloldzob 10
-burdel 3
-chedoz 2
-ciota 1
-cioty 1
-cipa 0
-cipe 0
-cipie 1
-cipk 0
-cipo 0
-cipu 0
-cipy 0
-cwel 0
-cyck 0
-czarnuch 5
-dupa 0
-dupci 2
-dupcz 2
-dupe 0
-dupi 0
-dupn 0
-dupo 0
-dupy 0
-dziwk 0
-fiut 0
-gown 0
-huj 0
-hwdp 3
-jeb 0
-kubale 4
-kurew 5
-kurw 5
-kutafon 10
-kutas 3
-lachociag 10
-lodziara 10
-obciag 0
-piczk 0
-pierdal 4
-pierdas 4
-pierdel 4
-pierdol 4
-pierduch 4
-pierdyl 4
-pierdziel 4
-pisdzi 3
-pizd 0
-pizg 0
-qrew 8
-qrw 8
-rucha 0
-suka 0
-suke 0
-suki 0
-suko 0
+bloldzob 10 100 100
+burdel 3 100 100
+chedoz 2 100 100
+ciota 1 100 100
+cioty 1 100 100
+cipa 0 100 100
+cipe 0 100 100
+cipie 1 100 100
+cipk 0 100 100
+cipo 0 100 100
+cipu 0 100 100
+cipy 0 100 100
+cwel 0 100 100
+cyck 0 100 100
+czarnuch 5 100 100
+dupa 0 100 100
+dupci 2 100 100
+dupcz 2 100 100
+dupe 0 100 100
+dupi 0 100 100
+dupn 0 100 100
+dupo 0 100 100
+dupy 0 100 100
+dziwk 0 100 100
+fiut 0 100 100
+gown 0 100 100
+huj 0 100 100
+hwdp 3 100 100
+idiot 0 100 100
+jeb 0 100 100
+jprdl 0 100 100
+kubale 4 100 100
+kurew 5 100 100
+kurw 5 100 100
+kutafon 10 100 100
+kutas 3 100 100
+lachociag 10 100 100
+lodziara 10 100 100
+obciag 0 100 100
+piczk 0 100 100
+pierdal 4 100 100
+pierdas 4 100 100
+pierdel 4 100 100
+pierdol 4 100 100
+pierduch 4 100 100
+pierdyl 4 100 100
+pierdziel 4 100 100
+pisdzi 3 100 100
+pizd 0 100 100
+pizg 0 100 100
+qrew 8 100 100
+qrw 8 100 100
+rucha 0 100 100
+suka 0 100 100
+suke 0 100 100
+suki 0 100 100
+suko 0 100 100
