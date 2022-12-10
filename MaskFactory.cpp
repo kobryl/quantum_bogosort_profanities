@@ -21,6 +21,8 @@ MaskFactory::MaskFactory() {
 		// 2 parameters: allowed characters before a word and after a word
 		createCacheFile(WHITELIST_CACHE_NAME, WHITELIST_NAME, 2);
 	readMaskCacheFile(WHITELIST_CACHE_NAME, &whitelistMasks);
+
+	currentWordMask = 0;
 }
 
 
@@ -115,21 +117,23 @@ bool MaskFactory::isCacheFileRecent(const char* cacheName, const char* listName)
 }
 
 
-// Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
-// A mask is a numerical representation of the letters a word consists of. If two words' masks match, then they consist of the same letters.
-bool MaskFactory::canBeProfanity(std::string& word, int profanityIndex) {
-	int mask = parseStringToMask(word);
-
-	return doMasksMatch(mask, profanityMasks[profanityIndex]);
+// Sets the currentWordMask variable to a mask of the given word. Used in canBeProfanity/Whitelisted to increase performance.
+void MaskFactory::setCurrentWordMask(std::string& word) {
+	currentWordMask = parseStringToMask(word);
 }
 
 
-// Checks if the provided word can be a whitelisted based on it's mask. Returns true or false depending on the outcome.
+// Checks if the word's mask set in currentWordMask could be a profanity based on it's mask. Returns true or false depending on the outcome.
 // A mask is a numerical representation of the letters a word consists of. If two words' masks match, then they consist of the same letters.
-bool MaskFactory::canBeWhitelisted(std::string& word, int whitelistIndex) {
-	int mask = parseStringToMask(word);
+bool MaskFactory::canBeProfanity(int profanityIndex) {
+	return doMasksMatch(currentWordMask, profanityMasks[profanityIndex]);
+}
 
-	return doMasksMatch(mask, whitelistMasks[whitelistIndex]);
+
+// Checks if the word's mask set in currentWordMask could be whitelisted based on it's mask. Returns true or false depending on the outcome.
+// A mask is a numerical representation of the letters a word consists of. If two words' masks match, then they consist of the same letters.
+bool MaskFactory::canBeWhitelisted(int whitelistIndex) {
+	return doMasksMatch(currentWordMask, whitelistMasks[whitelistIndex]);
 }
 
 
