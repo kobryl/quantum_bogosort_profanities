@@ -1,4 +1,3 @@
-
 Instrukcja obs≥ugi programu w trybie graficznym:
 1. Wprowadü tekst do przefiltrowania w obszarze "Tekst wejúciowy".
 2. Naciúnij przycisk "Uruchom".
