@@ -21,6 +21,8 @@ WIDGET_MARGIN = 10
 WIDGET_TEXT_WIDTH = WIDGET_WIDTH - 2 * WIDGET_MARGIN
 WIDGET_TEXT_HEIGHT = WIDGET_HEIGHT - 2 * WIDGET_MARGIN
 
+ABOUT_WIDGET_HEIGHT = 170
+
 PATH_TO_FILTER = "Debug\profanities.exe" if DEBUG else "profanities.exe"
 PATH_TO_WHITELIST = "./whitelist_debug.txt" if DEBUG else "./whitelist.txt"
 PATH_TO_PROFANITIES = "./profanity_list_debug.txt" if DEBUG else "./profanity_list.txt"

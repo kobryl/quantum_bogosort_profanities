@@ -158,7 +158,7 @@ class AboutWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("O programie")
-        self.setFixedSize(WIDGET_WIDTH, WIDGET_HEIGHT)
+        self.setFixedSize(WIDGET_WIDTH, ABOUT_WIDGET_HEIGHT)
         self.__aboutText = QLabel(self)
         try:
             with open(PATH_TO_ABOUT, "r") as f:
