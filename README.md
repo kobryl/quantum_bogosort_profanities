@@ -29,4 +29,12 @@ Aby uruchomić program w trybie graficznym należy uruchomić plik wykonywalny "
 
 ## Użyte technologie
 
-Lorem ipsum
+### GUI (Python)
+
+- Qt6
+- Unidecode
+- PyInstaller (do utworzenia pliku gui.exe)
+
+### Właściwy program (C++)
+
+Lorem ipsum dolor sit amet

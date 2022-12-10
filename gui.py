@@ -7,12 +7,20 @@ from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
     QMainWindow, QMessageBox, QWidget
 from unidecode import unidecode
+from collections.abc import Callable
 
 from constants import *
 
 
 class MainWindow(QMainWindow):
+    """
+        This class is the main window of the application.
+    """
     def __init__(self):
+        """
+        Constructor of the class. It initializes the main window and all of its labels and text inputs.
+        It also calls the setup function which sets up the layout of the window.
+        """
         super().__init__()
         self.__aboutWindow = None
         self.__helpWindow = None
@@ -31,8 +39,20 @@ class MainWindow(QMainWindow):
         self.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
         self.setup()
 
-    def setup(self):
-        def __buttonFactory(text, x, y, function):
+    def setup(self) -> None:
+        """
+        This function sets up the layout of the main window. It creates all the widgets and adds them to the main window.
+        :return: None
+        """
+        def __buttonFactory(text: str, x: int, y: int, function: Callable[[], None]) -> QPushButton:
+            """
+            Creates a button with the given text, position and function.
+            :param text: Text on the button.
+            :param x: The x coordinate of the button in the window.
+            :param y: The y coordinate of the button in the window.
+            :param function: Slot function to be called when the button is clicked.
+            :return: QPushButton object.
+            """
             btn = QPushButton(text, self)
             btn.move(x, y)
             btn.resize(BUTTON_WIDTH, BUTTON_HEIGHT)
@@ -40,24 +60,50 @@ class MainWindow(QMainWindow):
             btn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
             return btn
 
-        def __labelFactory(text, x, y):
+        def __labelFactory(text: str, x: int, y: int) -> QLabel:
+            """
+            Creates a label with the given text and position.
+            :param text: Label text.
+            :param x: The x coordinate of the label in the window.
+            :param y: The y coordinate of the label in the window.
+            :return: QLabel object.
+            """
             label = QLabel(text, self)
             label.move(x, y)
             label.resize(LABEL_WIDTH, LABEL_HEIGHT)
             return label
 
-        def __textAreaFactory(textArea, x, y, placeholder, width, height):
+        def __textAreaFactory(textArea: QPlainTextEdit, x: int, y: int, placeholder: str, width: int, height: int) -> None:
+            """
+            Creates a text area with the given text, position, placeholder and size.
+            :param textArea: QPlainTextEdit object that was initialized in constructor.
+            :param x: The x coordinate of the text area in the window.
+            :param y: The y coordinate of the text area in the window.
+            :param placeholder: Placeholder text.
+            :param width: Width of the text area.
+            :param height: Height of the text area.
+            :return: None
+            """
             textArea.move(x, y)
             textArea.setPlaceholderText(placeholder)
             textArea.resize(width, height)
             textArea.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
             textArea.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
 
-        def __normalizeText(text):
+        def __normalizeText(text: str) -> str:
+            """
+            Normalizes the given text by removing all the special characters and converting it to lowercase.
+            :param text: Text to be normalized.
+            :return: Normalized text.
+            """
             return unidecode(text).lower().replace(" ", "")
 
         @Slot()
-        def __addFalsePositive():
+        def __addFalsePositive() -> None:
+            """
+            Adds the text from the false positive text area to the whitelist.
+            :return: None
+            """
             try:
                 text = __normalizeText(self.__falsePositive.toPlainText())
                 if DEBUG:
@@ -72,7 +118,11 @@ class MainWindow(QMainWindow):
                 QMessageBox.critical(self, "Błąd", "Nie udało się zapisać.")
 
         @Slot()
-        def __addFalseNegative():
+        def __addFalseNegative() -> None:
+            """
+            Adds the text from the false negative text area to the list of profanities.
+            :return: None
+            """
             try:
                 text = __normalizeText(self.__falseNegative.toPlainText())
                 if DEBUG:
@@ -87,7 +137,14 @@ class MainWindow(QMainWindow):
                 QMessageBox.critical(self, "Błąd", "Nie udało się zapisać.")
 
         @Slot()
-        def __run():
+        def __run() -> None:
+            """
+            Runs the main algorithm. It checks if the input text contains any profanities and if so, it replaces them
+            with asterisks. For performance reasons, the algorithm was implemented in C++. The input text is passed
+            to it through standard input using temporary text file. Similarly, the output text is read from standard output.
+            The output then is displayed in the read-only output text area.
+            :return: None
+            """
             timestamp = str(datetime.now().strftime("%Y%m%d%H%M%S"))
             with open("input" + timestamp + ".txt", "w") as fileInput:
                 fileInput.write(self.__input.toPlainText())
@@ -109,16 +166,28 @@ class MainWindow(QMainWindow):
                     pass
 
         @Slot()
-        def __exit():
+        def __exit() -> None:
+            """
+            Exits the application.
+            :return: None
+            """
             QApplication.instance().quit()
 
         @Slot()
-        def __help():
+        def __help() -> None:
+            """
+            Displays the "Help" widget window.
+            :return: None
+            """
             self.__helpWindow = HelpWindow()
             self.__helpWindow.show()
 
         @Slot()
-        def __about():                                  # TODO: Write about.txt file
+        def __about() -> None:
+            """
+            Displays the "About" widget window.
+            :return: None
+            """
             self.__aboutWindow = AboutWindow()
             self.__aboutWindow.show()
 
@@ -153,8 +222,14 @@ class MainWindow(QMainWindow):
                                      WINDOW_HEIGHT - BUTTON_HEIGHT - 5, __exit)
 
         self.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
-        
+
     def closeEvent(self, event: QCloseEvent) -> None:
+        """
+        Overridden method from QWidget class. It is called when the main window is closed. It closes all the other
+        windows and exits the application.
+        :param event:
+        :return: None
+        """
         for w in [self.__helpWindow, self.__aboutWindow]:
             if w:
                 w.close()
@@ -162,7 +237,13 @@ class MainWindow(QMainWindow):
 
 
 class AboutWindow(QWidget):
+    """
+        "About" window class
+    """
     def __init__(self):
+        """
+        Constructor of the class. It creates the "About" window and sets its properties.
+        """
         super().__init__()
         self.setWindowTitle("O programie")
         self.setFixedSize(WIDGET_WIDTH, ABOUT_WIDGET_HEIGHT)
@@ -180,7 +261,13 @@ class AboutWindow(QWidget):
 
 
 class HelpWindow(QWidget):
+    """
+        "Help" window class
+    """
     def __init__(self):
+        """
+        Constructor of the class. It creates the "Help" window and sets its properties.
+        """
         super().__init__()
         self.setWindowTitle("Pomoc")
         self.setFixedSize(WIDGET_WIDTH, WIDGET_HEIGHT)
