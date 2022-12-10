@@ -33,7 +33,7 @@ private:
     bool containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord,
         int allowedCharactersInFront, int allowedCharactersInBack, int skip = 0);
 
-    bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip = 0);
+    bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip = -1);
 
     bool isOnWhitelist(std::string& potentialProfanityWord);
 
