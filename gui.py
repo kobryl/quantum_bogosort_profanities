@@ -3,6 +3,7 @@ import sys
 from datetime import datetime
 
 from PySide6.QtCore import Slot, Qt
+from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
     QMainWindow, QMessageBox, QWidget
 from unidecode import unidecode
@@ -13,6 +14,8 @@ from constants import *
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.__aboutWindow = None
+        self.__helpWindow = None
         self.__labelInput = QLabel(self)
         self.__labelOutput = QLabel(self)
         self.__labelFalsePositive = QLabel(self)
@@ -60,7 +63,7 @@ class MainWindow(QMainWindow):
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_WHITELIST, "a") as f:
-                    f.write(text + " 0\n")
+                    f.write(text + " 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do białej listy")
                 self.__falsePositive.setPlainText("")
             except Exception as e:
@@ -75,7 +78,7 @@ class MainWindow(QMainWindow):
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_PROFANITIES, "a") as f:
-                    f.write(text + " 0\n")
+                    f.write(text + "0 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do czarnej listy")
                 self.__falseNegative.setPlainText("")
             except Exception as e:
@@ -150,6 +153,12 @@ class MainWindow(QMainWindow):
                                      WINDOW_HEIGHT - BUTTON_HEIGHT - 5, __exit)
 
         self.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
+        
+    def closeEvent(self, event: QCloseEvent) -> None:
+        for w in [self.__helpWindow, self.__aboutWindow]:
+            if w:
+                w.close()
+        self.close()
 
 
 class AboutWindow(QWidget):
@@ -165,7 +174,7 @@ class AboutWindow(QWidget):
             self.__aboutText.setText("Nie znaleziono pliku zawierającego informacje o programie. "
                                      "Ponowne pobranie programu powinno rozwiązać problem.")
         self.__aboutText.move(WIDGET_MARGIN, WIDGET_MARGIN)
-        self.__aboutText.resize(WIDGET_TEXT_WIDTH, WIDGET_TEXT_HEIGHT)
+        self.__aboutText.resize(WIDGET_TEXT_WIDTH, ABOUT_TEXT_HEIGHT)
         self.__aboutText.setWordWrap(True)
         self.__aboutText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignJustify)
 
