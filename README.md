@@ -33,6 +33,7 @@ Aby uruchomić program w trybie graficznym należy uruchomić plik wykonywalny "
 
 - Qt6
 - Unidecode
+- PyInstaller (do utworzenia pliku gui.exe)
 
 ### Właściwy program (C++)
 
