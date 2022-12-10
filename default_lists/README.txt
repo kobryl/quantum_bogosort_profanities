@@ -1,0 +1,2 @@
+W tym katalogu znajdują się kopie list z ich domyślnymi wartościami.
+Kopie te mogą być wykorzystane na przykład wtedy, gdy użytkownik znacznie pogorszy działanie programu wprowadzając do list wiele błędnych danych.

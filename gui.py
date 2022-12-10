@@ -7,15 +7,20 @@ from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
     QMainWindow, QMessageBox, QWidget
 from unidecode import unidecode
+from collections.abc import Callable
 
 from constants import *
 
 
-"""
-    This class is the main window of the application.
-"""
 class MainWindow(QMainWindow):
+    """
+        This class is the main window of the application.
+    """
     def __init__(self):
+        """
+        Constructor of the class. It initializes the main window and all of its labels and text inputs.
+        It also calls the setup function which sets up the layout of the window.
+        """
         super().__init__()
         self.__aboutWindow = None
         self.__helpWindow = None
@@ -34,8 +39,12 @@ class MainWindow(QMainWindow):
         self.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
         self.setup()
 
-    def setup(self):
-        def __buttonFactory(text: str, x: int, y: int, function: Slot) -> QPushButton:
+    def setup(self) -> None:
+        """
+        This function sets up the layout of the main window. It creates all the widgets and adds them to the main window.
+        :return: None
+        """
+        def __buttonFactory(text: str, x: int, y: int, function: Callable[[], None]) -> QPushButton:
             """
             Creates a button with the given text, position and function.
             :param text: Text on the button.
@@ -226,11 +235,15 @@ class MainWindow(QMainWindow):
                 w.close()
         self.close()
 
-"""
-    "About" window class
-"""
+
 class AboutWindow(QWidget):
+    """
+        "About" window class
+    """
     def __init__(self):
+        """
+        Constructor of the class. It creates the "About" window and sets its properties.
+        """
         super().__init__()
         self.setWindowTitle("O programie")
         self.setFixedSize(WIDGET_WIDTH, ABOUT_WIDGET_HEIGHT)
@@ -246,11 +259,15 @@ class AboutWindow(QWidget):
         self.__aboutText.setWordWrap(True)
         self.__aboutText.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignJustify)
 
-"""
-    "Help" window class
-"""
+
 class HelpWindow(QWidget):
+    """
+        "Help" window class
+    """
     def __init__(self):
+        """
+        Constructor of the class. It creates the "Help" window and sets its properties.
+        """
         super().__init__()
         self.setWindowTitle("Pomoc")
         self.setFixedSize(WIDGET_WIDTH, WIDGET_HEIGHT)
