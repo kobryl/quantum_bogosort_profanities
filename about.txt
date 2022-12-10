@@ -1,0 +1,7 @@
+Zadanie eliminacyjne na Hackaton 2023. Program s³u¿y do wykrywania s³ów wulgarnych i zastêpowania ich gwiazdkami. Program dzia³a w trybie tekstowym oraz graficznym. Istnieje mo¿liwoœæ dodawania s³ów do list s³ów filtrowanych i wyj¹tków.
+
+Autorzy:
+Konrad Bry³owski
+Aleksander Czerwionka
+Micha³ Krause
+£ukasz Nowakowski
