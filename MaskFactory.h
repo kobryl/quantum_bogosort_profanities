@@ -32,6 +32,7 @@ class MaskFactory {
 private:
 	std::vector<int> profanityMasks;
 	std::vector<int> whitelistMasks;
+	int currentWordMask;			// currently set mask, which is used in canBeProfanity/Whitelisted to increase performance.
 
 	// Returns true if two masks match, false otherwise.
 	bool doMasksMatch(int firstMask, int secondMask);
@@ -51,15 +52,18 @@ private:
 	// Checks if the given list's cache file is recent. Returns true or false depending on the outcome.
 	bool isCacheFileRecent(const char* cacheName, const char* listName);
 
+	// Sets the currentWordMask variable to a mask of the given word. Used in canBeProfanity/Whitelisted to increase performance.
+	void setCurrentWordMask(std::string& word);
+
 public:
 	// Default constructor: initializes masks vector.
 	MaskFactory();
 
-	// Checks if the provided word can be a profanity based on it's mask. Returns true or false depending on the outcome.
-	bool canBeProfanity(std::string& word, int profanityIndex);
+	// Checks if the word's mask set in currentWordMask could be a profanity based on it's mask. Returns true or false depending on the outcome.
+	bool canBeProfanity(int profanityIndex);
 
-	// Checks if the provided word can be a whitelisted based on it's mask. Returns true or false depending on the outcome.
-	bool canBeWhitelisted(std::string& word, int whitelistIndex);
+	// Checks if the word's mask set in currentWordMask could be whitelisted based on it's mask. Returns true or false depending on the outcome.
+	bool canBeWhitelisted(int whitelistIndex);
 
 
 	// Debug functions
