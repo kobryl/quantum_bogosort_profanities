@@ -53,3 +53,4 @@ suka 0
 suke 0
 suki 0
 suko 0
+idiot 0

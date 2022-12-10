@@ -236,7 +236,7 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
 
 
 void ProfanityFilter::loadWhitelist() {
-    std::ifstream whitelistFile("default_lists/whitelist.txt");
+    std::ifstream whitelistFile("whitelist.txt");
     std::string whitelistWord;
     int tmp;
     while (whitelistFile >> whitelistWord >> tmp)
@@ -245,7 +245,7 @@ void ProfanityFilter::loadWhitelist() {
 
 
 void ProfanityFilter::loadProfanities() {
-    std::ifstream profanitiesListFile("default_lists/profanity_list.txt");
+    std::ifstream profanitiesListFile("profanity_list.txt");
     std::string profinityWord;
     int allowedCharactersBetween;
     while (profanitiesListFile >> profinityWord >> allowedCharactersBetween) {
