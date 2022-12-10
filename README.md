@@ -29,4 +29,7 @@ Aby uruchomić program w trybie graficznym należy uruchomić plik wykonywalny "
 
 ## Użyte technologie
 
-Lorem ipsum
+### GUI (Python)
+
+- Qt6
+- Unidecode
