@@ -15,6 +15,7 @@ private:
     std::vector<int> allowedCharactersBetweenWordsArray;
     std::vector<std::pair<int, int>> allowedWhitelistCharactersBeforeAndAfterWord;
     std::vector<std::pair<int, int>> allowedProfanityCharactersBeforeAndAfterWord;
+    std::vector<bool> isCensoredArray;
     MaskFactory wordMaskFactory;
     int originalIndex;
 
@@ -30,9 +31,9 @@ private:
         std::vector<std::vector<std::pair<std::pair<int, int>, char>>>& outputArray);
 
     bool containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord,
-        int allowedCharactersInFront, int allowedCharactersInBack);
+        int allowedCharactersInFront, int allowedCharactersInBack, int skip = 0);
 
-    bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray);
+    bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip = 0);
 
     bool isOnWhitelist(std::string& potentialProfanityWord);
 
