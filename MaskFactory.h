@@ -43,7 +43,7 @@ private:
 	void readMaskCacheFile(const char* cacheName, std::vector<int>* masks);
 
 	// Creates a given list's cache file and writes masks computed from the given word file.
-	void createCacheFile(const char* cacheName, const char* listName);
+	void createCacheFile(const char* cacheName, const char* listName, int irrelevantParamsAfterWord);
 
 	// Returns the given list's modification time.
 	time_t getListModificationTime(const char* fileName);

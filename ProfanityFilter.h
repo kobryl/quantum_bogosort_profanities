@@ -13,6 +13,8 @@ private:
     std::vector<std::string> profanitiesArray, sourceArray, originalData, whitelistArray;
     std::vector<std::vector<std::pair<std::pair<int, int>, char>>> processedArray;
     std::vector<int> allowedCharactersBetweenWordsArray;
+    std::vector<std::pair<int, int>> allowedWhitelistCharactersBeforeAndAfterWord;
+    std::vector<std::pair<int, int>> allowedProfanityCharactersBeforeAndAfterWord;
     MaskFactory wordMaskFactory;
     int originalIndex;
 
@@ -27,7 +29,8 @@ private:
     void generatePossibleVariationsOfLetters(std::vector<std::string>& sourceArray,
         std::vector<std::vector<std::pair<std::pair<int, int>, char>>>& outputArray);
 
-    bool containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord);
+    bool containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord,
+        int allowedCharactersInFront, int allowedCharactersInBack);
 
     bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray);
 

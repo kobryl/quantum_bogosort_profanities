@@ -1,56 +1,56 @@
-bloldzob 10
-burdel 3
-chedoz 2
-ciota 1
-cioty 1
-cipa 0
-cipe 0
-cipie 1
-cipk 0
-cipo 0
-cipu 0
-cipy 0
-cwel 0
-cyck 0
-czarnuch 5
-dupa 0
-dupci 2
-dupcz 2
-dupe 0
-dupi 0
-dupn 0
-dupo 0
-dupy 0
-dziwk 0
-fiut 0
-gown 0
-huj 0
-hwdp 3
-jeb 0
-kubale 4
-kurew 5
-kurw 5
-kutafon 10
-kutas 3
-lachociag 10
-lodziara 10
-obciag 0
-piczk 0
-pierdal 4
-pierdas 4
-pierdel 4
-pierdol 4
-pierduch 4
-pierdyl 4
-pierdziel 4
-pisdzi 3
-pizd 0
-pizg 0
-qrew 8
-qrw 8
-rucha 0
-suka 0
-suke 0
-suki 0
-suko 0
-idiot 0
+bloldzob 10 0 0
+burdel 3 0 0
+chedoz 2 0 0
+ciota 1 0 0
+cioty 1 0 0
+cipa 0 0 0
+cipe 0 0 0
+cipie 1 0 0
+cipk 0 0 0
+cipo 0 0 0
+cipu 0 0 0
+cipy 0 0 0
+cwel 0 0 0
+cyck 0 0 0
+czarnuch 5 0 0
+dupa 0 0 0
+dupci 2 0 0
+dupcz 2 0 0
+dupe 0 0 0
+dupi 0 0 0
+dupn 0 0 0
+dupo 0 0 0
+dupy 0 0 0
+dziwk 0 0 0
+fiut 0 0 0
+gown 0 0 0
+huj 0 0 0
+hwdp 3 0 0
+jeb 0 0 0
+kubale 4 0 0
+kurew 5 0 0
+kurw 5 0 0
+kutafon 10 0 0
+kutas 3 0 0
+lachociag 10 0 0
+lodziara 10 0 0
+obciag 0 0 0
+piczk 0 0 0
+pierdal 4 0 0
+pierdas 4 0 0
+pierdel 4 0 0
+pierdol 4 0 0
+pierduch 4 0 0
+pierdyl 4 0 0
+pierdziel 4 0 0
+pisdzi 3 0 0
+pizd 0 0 0
+pizg 0 0 0
+qrew 8 0 0
+qrw 8 0 0
+rucha 0 0 0
+suka 0 0 0
+suke 0 0 0
+suki 0 0 0
+suko 0 0 0
+idiot 0 0 0
