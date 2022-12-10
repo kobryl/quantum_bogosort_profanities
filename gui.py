@@ -60,7 +60,7 @@ class MainWindow(QMainWindow):
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_WHITELIST, "a") as f:
-                    f.write(text + " 0\n")
+                    f.write(text + " 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do białej listy")
                 self.__falsePositive.setPlainText("")
             except Exception as e:
@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_PROFANITIES, "a") as f:
-                    f.write(text + " 0\n")
+                    f.write(text + "0 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do czarnej listy")
                 self.__falseNegative.setPlainText("")
             except Exception as e:
