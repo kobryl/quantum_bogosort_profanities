@@ -268,7 +268,7 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
         }
         if (!wordMaskFactory.canBeProfanity(i))
             continue;
-        if (charactersAfterWord + charactersBeforeWord + currentProfanity.size() + skip < potentialProfanityWord.size())
+        if (charactersAfterWord + charactersBeforeWord + currentProfanity.size() + std::max(skip, 0) < potentialProfanityWord.size())
             continue;
         if (containsSubstring(potentialProfanityWord, currentProfanity, characterBetweenWord,
             charactersBeforeWord, charactersAfterWord, std::max(skip, 0))) {
