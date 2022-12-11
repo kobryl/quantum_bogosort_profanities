@@ -1,7 +1,21 @@
 #include "ProfanityFilter.h"
 #include "MaskFactory.h"
 
+/**
+ * The `ProfanityFilter` class provides a way to filter out profanity from a string by performing several
+ * transformations on the string, such as collapsing repeating characters, removing special characters and digits,
+ * and converting the string to lower case. It also generates possible variations
+ * of each character in the string. This allows the filter to identify and censor profanity even if it has been
+ * transformed in some way.
+ */
 
+ /**
+  * Collapses repeated characters in the given array of strings.
+  *
+  * For example, the string "hello" would become "helo".
+  *
+  * @param sourceArray The array of strings to collapse the repeated characters in.
+  */
 void ProfanityFilter::collapseLetters(std::vector<std::string>& sourceArray) {
     std::string tmpString;
     for (int i = 0; i < sourceArray.size(); i++) {
@@ -16,7 +30,13 @@ void ProfanityFilter::collapseLetters(std::vector<std::string>& sourceArray) {
     }
 }
 
-
+/**
+ * Replaces special characters and digits from the given array of strings.
+ *
+ * For example, the string "hello@123" would become "helloaize".
+ *
+ * @param sourceArray The array of strings to remove the special characters and digits from.
+ */
 void ProfanityFilter::removeSpecialCharactersAndDigits(std::vector<std::string>& sourceArray) {
     std::map<char, char> specialCharactersSwapMap = {
         {'0', 'o'},
@@ -48,7 +68,11 @@ void ProfanityFilter::removeSpecialCharactersAndDigits(std::vector<std::string>&
     }
 }
 
-
+/**
+ * Converts the given array of strings to lower case.
+ *
+ * @param sourceArray The array of strings to convert to lower case.
+ */
 void ProfanityFilter::toLowerCases(std::vector<std::string>& sourceArray) {
     for (int i = 0; i < sourceArray.size(); i++) {
         for (int j = 0; j < sourceArray[i].size(); j++) {
@@ -58,7 +82,11 @@ void ProfanityFilter::toLowerCases(std::vector<std::string>& sourceArray) {
     }
 }
 
-
+/**
+ * Replaces certain diacritical marks from the given array of strings to characters that are easier to handle in code.
+ *
+ * @param sourceArray The array of strings to remove the diacritical marks from.
+ */
 void ProfanityFilter::removeUnambiguousDiactrics(std::vector<std::string>& sourceArray) {
     std::map<std::pair<int, int>, char> diactricsSwapMap = {
         {{-60, -123}, 'a'},
@@ -88,7 +116,13 @@ void ProfanityFilter::removeUnambiguousDiactrics(std::vector<std::string>& sourc
     }
 }
 
-
+/**
+ * Generates possible variations of each character in the given array of strings.
+ * For example, word `all` would have 4 variations: `all`, `ali`, `ail`, `aii`
+ *
+ * @param sourceArray The array of strings to generate the character variations for.
+ * @param outputArray An array to store the generated character variations in.
+ */
 void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::string>& sourceArray,
     std::vector<std::vector<std::pair<std::pair<int, int>, char>>>& outputArray) {
     std::map<char, std::vector<char>> possibleSingleCharacterSwaps = {
@@ -138,7 +172,9 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
     }
 }
 
-
+/**
+ * Loads the inputted text and the list of profanities and the whitelist from files.
+ */
 void ProfanityFilter::loadData() {
     std::string inputWord;
     while (std::cin >> inputWord) {
@@ -147,7 +183,18 @@ void ProfanityFilter::loadData() {
     }
 }
 
-
+/**
+ * Determines if the given `checkedWord` contains the given `substringWord`, taking into account the number of allowed
+ * characters between the words, and the allowed characters in front and back of the word.
+ *
+ * @param checkedWord The string to check for the presence of the given `substringWord`.
+ * @param substringWord The string to search for in the `checkedWord`.
+ * @param possibleCharactersBetweenInWord The number of allowed characters between the characters that can create `substringWord`.
+ * @param allowedCharactersInFront The number of allowed characters in front of the word.
+ * @param allowedCharactersInBack The number of allowed characters in back of the word.
+ * @param skip The number of characters to skip when checking for the `substringWord` in the `checkedWord`.
+ * @returns `true` if the `checkedWord` contains the `substringWord`, `false` otherwise.
+ */
 bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord,
     int allowedCharactersInFront, int allowedCharactersInBack, int skip) {
     int startIndex = std::max(skip,  int((int)checkedWord.size() - substringWord.size() - allowedCharactersInBack));
@@ -176,7 +223,14 @@ bool ProfanityFilter::containsSubstring(std::string& checkedWord, std::string& s
     return false;
 }
 
-
+/**
+ * Determines if the given `potentialProfanityWord` is on the whitelist, taking into account the number of characters
+ * to skip.
+ *
+ * @param potentialProfanityWord The string to check if it is on the whitelist.
+ * @param skip The number of characters to skip when checking for the `potentialProfanityWord` in the whitelist.
+ * @returns `true` if the `potentialProfanityWord` is on the whitelist, `false` otherwise.
+ */
 bool ProfanityFilter::isOnWhitelist(std::string& potentialProfanityWord, int skip) {
     wordMaskFactory.setCurrentWordMask(potentialProfanityWord, skip);
     for (int i = 0; i < whitelistArray.size(); i++) {
@@ -193,7 +247,15 @@ bool ProfanityFilter::isOnWhitelist(std::string& potentialProfanityWord, int ski
     return false;
 }
 
-
+/**
+ * Determines if the given `potentialProfanityWord` is a profanity, taking into account the list of profanities
+ * and the number of characters to skip.
+ *
+ * @param potentialProfanityWord The string to check if it is a profanity.
+ * @param profanitiesArray The list of profanities to compare against.
+ * @param skip The number of characters to skip when checking for the `potentialProfanityWord` in the `profanitiesArray`.
+ * @returns `true` if the `potentialProfanityWord` is a profanity, `false` otherwise.
+ */
 bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip) {
     wordMaskFactory.setCurrentWordMask(potentialProfanityWord, skip);
     for (int i = 0; i < profanitiesArray.size(); i++) {
@@ -231,7 +293,17 @@ std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << " o
 
 }
 
-
+/**
+ * Determines if the given `inputArray` contains any profanity, by checking all possible words that are possible to generate
+ * from given array.
+ *
+ * @param inputArray The array of character variations to generate words and check for profanity in.
+ * It contains information which character can be used on which index
+ * @param index The index of the current character in the `inputArray` being checked.
+ * @param arrayLocationIndex The index of the current character of `inputArray` being checked.
+ * @param currentWord A pointer to the current word being checked.
+ * @returns `true` if the `inputArray` contains profanity, `false` otherwise.
+ */
 bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
     int index, int arrayLocationIndex, std::string* currentWord) {
     if (index > inputArray.back().first.first) {
@@ -252,7 +324,9 @@ bool ProfanityFilter::findProfanityInAllPossibleWords(std::vector<std::pair<std:
     return foundProfanity;
 }
 
-
+/**
+ * Loads the whitelist from a file.
+ */
 void ProfanityFilter::loadWhitelist() {
     std::ifstream whitelistFile("whitelist.txt");
     std::string whitelistWord;
@@ -263,7 +337,9 @@ void ProfanityFilter::loadWhitelist() {
     }
 }
 
-
+/**
+ * Loads the list of profanities from a file.
+ */
 void ProfanityFilter::loadProfanities() {
     std::ifstream profanitiesListFile("profanity_list.txt");
     std::string profinityWord;
@@ -276,7 +352,9 @@ void ProfanityFilter::loadProfanities() {
     }
 }
 
-
+/**
+ * Filters the inputted text to censor any profanity.
+ */
 void ProfanityFilter::censorInputtedText() {
     wordMaskFactory = MaskFactory();
 
@@ -372,7 +450,9 @@ void ProfanityFilter::censorInputtedText() {
     }
 }
 
-
+/**
+ * Shows the censored version of the inputted text.
+ */
 void ProfanityFilter::showCensoredText() {
     for (std::string word : outputArray) {
         std::cout << word << " ";
