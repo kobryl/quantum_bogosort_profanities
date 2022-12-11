@@ -12,6 +12,14 @@ Zadanie eliminacyjne na Hackaton 2023. Program służy do wykrywania słów wulg
 - Łukasz Nowakowski
 <br>
 
+## Przewidziane sytuacje
+
+- kilka tych samych liter obok siebie
+- podobne znaki (np. $ -> s, u -> v, vv -> w itp.)
+- rozdzielenie słowa spacją
+- zamiana miejscami dwóch liter obok siebie
+<br>
+
 ## :wrench: Tryby działania programu
 
 ### Tryb tekstowy
@@ -30,9 +38,10 @@ Aby uruchomić program w trybie graficznym należy uruchomić plik wykonywalny `
 
 Istnieje możliwość dodania słów, które naszym zdaniem nie powinny być cenzurowane. Aby dodać nowe słowo należy dodać na koniec pliku `whitelist.txt` nowe słowo w formacie:
 
-    słowo p z
+    slowo p z
 
 gdzie: <br>
+`slowo` to dodawane słowo pozbawione polskich znaków diakratycznych (np. "słów" -> "slow");<br>
 `p` oznacza liczbę dowolnych znaków dozwolonych przed słowem; <br>
 `z` oznacza liczbę dowolnych znaków dozwolonych za słowem.
 
@@ -42,9 +51,10 @@ Plik `whitelist.txt` musi być zakończony pustą linią.
 
 Opcja pozwalająca dodawać do cenzury słowa, które są dla nas obraźliwe działa podobnie jak dodawanie wyjątków. Na koniec pliku `profanity_list.txt` należy dodać wpis w formacie:
 
-    słowo m p z
+    slowo m p z
 
 gdzie: <br>
+`slowo` to dodawane słowo pozbawione polskich znaków diakratycznych (np. "słów" -> "slow");<br>
 `m` oznacza liczbę dowolnych znaków, które mogą się znajdować pomiędzy literami słowa, aby było ono wykryte jako wulgaryzm;<br>
 `p` oznacza liczbę dowolnych znaków umieszczonych przed wulgaryzmem, które będą uzwględnione w przekleństwie;<br>
 `z` oznacza liczbę dowolnych znaków umieszczonych po wulgaryzmie, które będą uwzględnione w przekleństwie.<br>

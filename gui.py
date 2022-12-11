@@ -30,8 +30,8 @@ class MainWindow(QMainWindow):
         self.__labelFalseNegative = QLabel(self)
         self.__input = QPlainTextEdit(self)
         self.__output = QPlainTextEdit(self)
-        self.__falsePositive = None
-        self.__falseNegative = None
+        self.__falsePositive = QLineEdit(self)
+        self.__falseNegative = QLineEdit(self)
         self.setFocusPolicy(Qt.StrongFocus)
         self.setWindowTitle("Filtr wulgaryzmów - Quantum Bogosort")
         self.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -90,9 +90,10 @@ class MainWindow(QMainWindow):
             textArea.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
             textArea.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
 
-        def __lineEditFactory(x: int, y: int, placeholder: str, width: int, height: int) -> QLineEdit:
+        def __lineEditFactory(lineEdit: QLineEdit, x: int, y: int, placeholder: str, width: int, height: int) -> None:
             """
-            Creates a line edit with the given position, placeholder and size.
+            Sets up given line edit object with the given position, placeholder and size.
+            :param lineEdit: QLineEdit object that was initialized in constructor.
             :param x: The x coordinate of the line edit in the window.
             :param y: The y coordinate of the line edit in the window.
             :param placeholder: Placeholder text.
@@ -100,13 +101,11 @@ class MainWindow(QMainWindow):
             :param height: Height of the line edit.
             :return: QLineEdit object.
             """
-            lineEdit = QLineEdit(self)
             lineEdit.move(x, y)
             lineEdit.setPlaceholderText(placeholder)
             lineEdit.resize(width, height)
             lineEdit.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
             lineEdit.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
-            return lineEdit
 
         def __normalizeText(text: str) -> str:
             """
@@ -127,13 +126,13 @@ class MainWindow(QMainWindow):
             :return: None
             """
             try:
-                text = __normalizeText(self.__falsePositive.toPlainText())
+                text = __normalizeText(self.__falsePositive.text())
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_WHITELIST, "a", encoding="UTF-8") as f:
                     f.write(text + " 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do białej listy")
-                self.__falsePositive.setPlainText("")
+                self.__falsePositive.setText("")
             except Exception as e:
                 if DEBUG:
                     print(e)
@@ -146,13 +145,13 @@ class MainWindow(QMainWindow):
             :return: None
             """
             try:
-                text = __normalizeText(self.__falseNegative.toPlainText())
+                text = __normalizeText(self.__falseNegative.text())
                 if DEBUG:
                     print(text)
                 with open(PATH_TO_PROFANITIES, "a", encoding="UTF-8") as f:
                     f.write(text + " 0 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do czarnej listy")
-                self.__falseNegative.setPlainText("")
+                self.__falseNegative.setText("")
             except Exception as e:
                 if DEBUG:
                     print(e)
@@ -224,9 +223,9 @@ class MainWindow(QMainWindow):
         # Text Areas
         __textAreaFactory(self.__input, 5, 40, "Wpisz tekst do przefiltrowania...", TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
         __textAreaFactory(self.__output, 5, 240, "Tekst po przefiltrowaniu...", TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
-        self.__falsePositive = __lineEditFactory(TEXTAREA_WIDTH + 15, 40, "Wpisz nowy wyjątek...",
+        __lineEditFactory(self.__falsePositive, TEXTAREA_WIDTH + 15, 40, "Wpisz nowy wyjątek...",
                           TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
-        self.__falseNegative = __lineEditFactory(TEXTAREA_WIDTH + 15, 150, "Wpisz niewykryty wulgaryzm...",
+        __lineEditFactory(self.__falseNegative, TEXTAREA_WIDTH + 15, 150, "Wpisz niewykryty wulgaryzm...",
                           TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
 
         self.__output.setReadOnly(True)
