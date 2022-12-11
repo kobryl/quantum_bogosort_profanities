@@ -12,6 +12,14 @@ Zadanie eliminacyjne na Hackaton 2023. Program służy do wykrywania słów wulg
 - Łukasz Nowakowski
 <br>
 
+## Przewidziane sytuacje
+
+- kilka tych samych liter obok siebie
+- podobne znaki (np. $ -> s, u -> v, vv -> w itp.)
+- rozdzielenie słowa spacją
+- zamiana miejscami dwóch liter obok siebie
+<br>
+
 ## :wrench: Tryby działania programu
 
 ### Tryb tekstowy
