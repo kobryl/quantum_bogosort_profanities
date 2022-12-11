@@ -338,13 +338,9 @@ void ProfanityFilter::censorInputtedText() {
         if (currentFrontIndex == i)
             continue;
         if (isWhitelistedArray[i]) {
-            while (currentFrontIndex <= i) {
-                if (!isCensoredArray[currentFrontIndex]) {
-                    skip += sourceArray[currentFrontIndex].size();
-                    currentWordLength -= sourceArray[currentFrontIndex].size();
-                }
-                currentFrontIndex++;
-            }
+            currentFrontIndex = i;
+            skip = currentWordWithSkippedSpaces.size();
+            currentWordLength = 0;
             continue;
         }
         bool isCensored = false;
