@@ -111,8 +111,6 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
 
     //single characters
     for (int i = 0; i < sourceArray.size(); i++) {
-        if (isWhitelistedArray[i])
-            continue;
         std::vector<std::pair<std::pair<int, int>, char>> possibleLettersInWord;
         for (int j = 0; j < sourceArray[i].size(); j++) {
             char currentCharacterInWord = sourceArray[i][j];
@@ -284,19 +282,21 @@ void ProfanityFilter::loadProfanities() {
 void ProfanityFilter::censorInputtedText() {
     wordMaskFactory = MaskFactory();
 
+    loadProfanities();
+    loadWhitelist();
+
     removeUnambiguousDiactrics(sourceArray);
     removeSpecialCharactersAndDigits(sourceArray);
     toLowerCases(sourceArray);
     collapseLetters(sourceArray);
+    generatePossibleVariationsOfLetters(sourceArray, processedArray);
+
     for (int i = 0; i < sourceArray.size(); i++) {
         if (isOnWhitelist(sourceArray[i]))
             isWhitelistedArray.push_back(true);
         else
             isWhitelistedArray.push_back(false);
     }
-    generatePossibleVariationsOfLetters(sourceArray, processedArray);
-    loadProfanities();
-    loadWhitelist();
 
     for (int i = 0; i < processedArray.size(); i++) {
         std::string tmp = "";
