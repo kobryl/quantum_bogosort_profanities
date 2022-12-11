@@ -33,7 +33,7 @@ Istnieje możliwość dodania słów, które naszym zdaniem nie powinny być cen
     slowo p z
 
 gdzie: <br>
-`slowo` to dodawane słowo pozbawione polskich znaków diakratycznych (np. "słów" -> "slow")
+`slowo` to dodawane słowo pozbawione polskich znaków diakratycznych (np. "słów" -> "slow");<br>
 `p` oznacza liczbę dowolnych znaków dozwolonych przed słowem; <br>
 `z` oznacza liczbę dowolnych znaków dozwolonych za słowem.
 
@@ -46,7 +46,7 @@ Opcja pozwalająca dodawać do cenzury słowa, które są dla nas obraźliwe dzi
     slowo m p z
 
 gdzie: <br>
-`slowo` to dodawane słowo pozbawione polskich znaków diakratycznych (np. "słów" -> "slow")
+`slowo` to dodawane słowo pozbawione polskich znaków diakratycznych (np. "słów" -> "slow");<br>
 `m` oznacza liczbę dowolnych znaków, które mogą się znajdować pomiędzy literami słowa, aby było ono wykryte jako wulgaryzm;<br>
 `p` oznacza liczbę dowolnych znaków umieszczonych przed wulgaryzmem, które będą uzwględnione w przekleństwie;<br>
 `z` oznacza liczbę dowolnych znaków umieszczonych po wulgaryzmie, które będą uwzględnione w przekleństwie.<br>
