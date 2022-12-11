@@ -96,7 +96,15 @@ class MainWindow(QMainWindow):
             :param text: Text to be normalized.
             :return: Normalized text.
             """
-            return unidecode(text).lower().replace(" ", "")
+            normalized_text = ""
+            for c in text:
+                if c.isalpha():
+                    normalized_text += c.lower()
+                    break
+            for c in text:
+                if c != normalized_text[-1] and c.isalpha():
+                    normalized_text += c
+            return unidecode(normalized_text).lower().replace(" ", "")
 
         @Slot()
         def __addFalsePositive() -> None:
