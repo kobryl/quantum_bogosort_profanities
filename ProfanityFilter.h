@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <map>
@@ -33,6 +34,11 @@ private:
      * An array of the original data before it was filtered.
      */
     std::vector<std::string> originalData;
+
+    /**
+     * An array of the original data before it was filtered, in form of whole lines represented as strings.
+     */
+    std::vector<std::string> originalLines;
 
     /**
      * An array of words that are not considered profanity, even if they share part of its spelling with profanity.
