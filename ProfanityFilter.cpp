@@ -310,15 +310,13 @@ void ProfanityFilter::censorInputtedText() {
     }
     int maxLengthOfWord = 0;
     for (int i = 0; i < profanitiesArray.size(); i++) {
-        int charactersBeforeWord = allowedProfanityCharactersBeforeAndAfterWord[i].first;
-        int charactersAfterWord = allowedProfanityCharactersBeforeAndAfterWord[i].second;
-        maxLengthOfWord = std::max(maxLengthOfWord, (int)profanitiesArray[i].size() + charactersBeforeWord + charactersAfterWord);
+        maxLengthOfWord = std::max(maxLengthOfWord, (int)profanitiesArray[i].size());
     }
     std::cout << "Profanities with spaces: \n";
     std::string currentWordWithSkippedSpaces = "";
     int currentFrontIndex = 0, skip = 0, currentWordLength = 0;
     for (int i = 0; i < processedArray.size(); i++) {
-
+        originalIndex = i;
         if (isCensoredArray[i]) {
             continue;
         }
@@ -328,7 +326,7 @@ void ProfanityFilter::censorInputtedText() {
             currentWordWithSkippedSpaces = currentWordWithSkippedSpaces.substr(std::max(skip, 0));
             skip = 0;
         }
-        while (currentWordLength > maxLengthOfWord * 2) {
+        while (currentWordLength > maxLengthOfWord && i - currentFrontIndex + 1 > 2) {
             if (!isCensoredArray[currentFrontIndex]) {
                 skip += sourceArray[currentFrontIndex].size();
                 currentWordLength -= sourceArray[currentFrontIndex].size();
@@ -338,7 +336,7 @@ void ProfanityFilter::censorInputtedText() {
         if (currentFrontIndex == i)
             continue;
         if (isWhitelistedArray[i]) {
-            currentFrontIndex = i;
+            currentFrontIndex = i + 1;
             skip = currentWordWithSkippedSpaces.size();
             currentWordLength = 0;
             continue;
