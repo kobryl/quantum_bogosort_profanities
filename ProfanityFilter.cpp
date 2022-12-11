@@ -312,22 +312,49 @@ bool ProfanityFilter::isProfanity(std::vector<std::pair<std::pair<int, int>, cha
             continue;
         if (containsSubstring(potentialProfanityWord, currentProfanity, characterBetweenWord,
             charactersBeforeWord, charactersAfterWord, std::max(skip, 0))) {
-            std::cout << "WULGARYZM!! " << currentProfanity << " originalnie:" << originalData[originalIndex] << "\n";
             return true;
         }
 
         if (skip != -1)
             continue;
         //If profanity has two adjacent letters swapped
-        // TO DO
-        //for (int i = 0; i < potentialProfanityWordSize - 1; i++) {
-        //    std::swap(potentialProfanityWord[i], potentialProfanityWord[i + 1]);
-        //    if (containsSubstring(potentialProfanityWord, currentProfanity, 0, charactersBeforeWord,
-        //        charactersAfterWord, 0)) {
-        //        //std::cout << potentialProfanityWord << "WULGARYZM!! " << currentProfanity << " originalnie:" << originalData[originalIndex] << "\n";
-        //        return true;
+        // TO DO It worked before changes :((
+        //int currIdx = 0, nextIdx = 0, nextWordIdx, currWordIdx, endOfFirstHalfIdx;
+        //for(int i = 0; i < potentialProfanityWordSize - 1; i++){
+
+        //    while (nextIdx < potentialProfanityWord.size() && potentialProfanityWord[currIdx].first.first == potentialProfanityWord[nextIdx].first.first)
+        //        nextIdx++;
+        //    nextWordIdx = potentialProfanityWord[nextIdx].first.first;
+        //    currWordIdx = potentialProfanityWord[currIdx].first.first;
+        //    endOfFirstHalfIdx = nextIdx;
+        //    while (nextIdx < potentialProfanityWord.size() && potentialProfanityWord[endOfFirstHalfIdx].first.first == potentialProfanityWord[nextIdx].first.first)
+        //        nextIdx++;
+        //    for (int j = currIdx; j < currIdx + (nextIdx - currIdx) / 2; j++) {
+        //        std::swap(potentialProfanityWord[j], potentialProfanityWord[nextIdx - j - 1]);
         //    }
-        //    std::swap(potentialProfanityWord[i], potentialProfanityWord[i + 1]);
+        //    for (int j = currIdx; j < nextIdx; j++) {
+        //        if (potentialProfanityWord[j].first.first == currWordIdx)
+        //            potentialProfanityWord[j].first.first = nextWordIdx;
+        //        else
+        //            potentialProfanityWord[j].first.first = currWordIdx;
+        //    }
+        //    for (int j = 0; j < potentialProfanityWord.size(); j++) {
+        //        if (containsSubstring(potentialProfanityWord, currentProfanity, 0, charactersBeforeWord,
+        //            charactersAfterWord, 0)) {
+        //            return true;
+        //        }
+        //    }
+        //    for (int j = currIdx; j < currIdx + (nextIdx - currIdx) / 2; j++) {
+        //        std::swap(potentialProfanityWord[j], potentialProfanityWord[nextIdx - j - 1]);
+        //    }
+        //    for (int j = currIdx; j < nextIdx; j++) {
+        //        if (potentialProfanityWord[j].first.first == currWordIdx)
+        //            potentialProfanityWord[j].first.first = nextWordIdx;
+        //        else
+        //            potentialProfanityWord[j].first.first = currWordIdx;
+        //    }
+        //    currIdx = endOfFirstHalfIdx;
+        //    nextIdx = endOfFirstHalfIdx;
         //}
     }
     return false;
@@ -400,7 +427,6 @@ void ProfanityFilter::censorInputtedText() {
     for (int i = 0; i < profanitiesArray.size(); i++) {
         maxLengthOfWord = std::max(maxLengthOfWord, (int)profanitiesArray[i].size() * 2);
     }
-    std::cout << "Profanities with spaces: \n";
     std::vector<std::pair<std::pair<int, int>, char>> currentWordWithSkippedSpaces;
     int currentFrontIndex = 0, skip = 0, currentWordLength = 0;
     for (int i = 0; i < processedArray.size(); i++) {
@@ -416,11 +442,6 @@ void ProfanityFilter::censorInputtedText() {
             currentWordWithSkippedSpaces.push_back({newIndex, processedArray[i][j].second});
         }
         currentWordLength += processedArray[i][processedArray[i].size() - 1].first.first + 1;
-        //to do
-        //if (currentWordWithSkippedSpaces.size() > 10000){
-        //    currentWordWithSkippedSpaces = currentWordWithSkippedSpaces.substr(std::max(skip, 0));
-        //    skip = 0;
-        //}
 
         while (currentWordLength > maxLengthOfWord && i - currentFrontIndex + 1 > 2) {
             if (!isCensoredArray[currentFrontIndex]) {
@@ -449,11 +470,6 @@ void ProfanityFilter::censorInputtedText() {
             currentFrontIndex--;
             skip -= processedArray[currentFrontIndex].size();
             currentWordLength += processedArray[currentFrontIndex][processedArray[currentFrontIndex].size() - 1].first.first + 1;
-            std::cout << "PRAWDZIWY wulgaryzm ze spacja: ";
-            for (int j = currentFrontIndex; j <= i; j++) {
-                std::cout << sourceArray[j];
-            }
-            std::cout << "\n";
             while (currentFrontIndex <= i) {
                 if (!isCensoredArray[currentFrontIndex]) {
                     isCensoredArray[currentFrontIndex] = true;
