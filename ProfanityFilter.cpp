@@ -190,10 +190,14 @@ bool ProfanityFilter::isGivenCharacterPossibleVariation(std::vector<std::pair<st
  * Loads the inputted text and the list of profanities and the whitelist from files.
  */
 void ProfanityFilter::loadData() {
-    std::string inputWord;
-    while (std::cin >> inputWord) {
-        sourceArray.push_back(inputWord);
-        originalData.push_back(inputWord);
+    std::string inputWord, line;
+    while (std::getline(std::cin, line)) {
+        originalLines.push_back(line);
+        std::stringstream lineStream(line);
+        while (lineStream >> inputWord) {
+            sourceArray.push_back(inputWord);
+            originalData.push_back(inputWord);
+        }
     }
 }
 
@@ -477,7 +481,21 @@ void ProfanityFilter::censorInputtedText() {
  * Shows the censored version of the inputted text.
  */
 void ProfanityFilter::showCensoredText() {
-    for (std::string word : outputArray) {
-        std::cout << word << " ";
+    int currentWordIndex = 0;
+    for (std::string line : originalLines) {
+        std::stringstream lineStream(line);
+        std::string word;
+        char currentChar;
+        while (lineStream >> word) {
+            if (isCensoredArray[currentWordIndex])
+                std::cout << outputArray[currentWordIndex] << " ";
+            else
+                std::cout << word << " ";
+            currentWordIndex++;
+        }
+        //for (std::string word : outputArray) {
+            //std::cout << word << " ";
+        //}
+        std::cout << '\n';
     }
 }
