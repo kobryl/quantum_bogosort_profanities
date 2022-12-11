@@ -203,6 +203,8 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
         int characterBetweenWord = allowedCharactersBetweenWordsArray[i];
         if (skip != -1) {
             characterBetweenWord = 0;
+            charactersBeforeWord = 0;
+            charactersAfterWord = 0;
         }
         if (!wordMaskFactory.canBeProfanity(i))
             continue;
@@ -301,9 +303,7 @@ void ProfanityFilter::censorInputtedText() {
     }
     int maxLengthOfWord = 0;
     for (int i = 0; i < profanitiesArray.size(); i++){
-        int charactersBeforeWord = allowedWhitelistCharactersBeforeAndAfterWord[i].first;
-        int charactersAfterWord = allowedWhitelistCharactersBeforeAndAfterWord[i].second;
-        maxLengthOfWord = std::max(maxLengthOfWord, (int)profanitiesArray[i].size() + charactersBeforeWord + charactersAfterWord);
+        maxLengthOfWord = std::max(maxLengthOfWord, (int)profanitiesArray[i].size() * 2);
     }
 
     std::string currentWordWithSkippedSpaces = "";
