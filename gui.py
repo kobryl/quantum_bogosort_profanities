@@ -1,3 +1,4 @@
+import locale
 import os
 import sys
 from datetime import datetime
@@ -10,6 +11,7 @@ from unidecode import unidecode
 from collections.abc import Callable
 
 from constants import *
+
 
 
 class MainWindow(QMainWindow):
@@ -108,7 +110,7 @@ class MainWindow(QMainWindow):
                 text = __normalizeText(self.__falsePositive.toPlainText())
                 if DEBUG:
                     print(text)
-                with open(PATH_TO_WHITELIST, "a") as f:
+                with open(PATH_TO_WHITELIST, "a", encoding="UTF-8") as f:
                     f.write(text + " 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do białej listy")
                 self.__falsePositive.setPlainText("")
@@ -127,7 +129,7 @@ class MainWindow(QMainWindow):
                 text = __normalizeText(self.__falseNegative.toPlainText())
                 if DEBUG:
                     print(text)
-                with open(PATH_TO_PROFANITIES, "a") as f:
+                with open(PATH_TO_PROFANITIES, "a", encoding="UTF-8") as f:
                     f.write(text + " 0 0 0\n")
                 QMessageBox.information(self, "Sukces", "Dodano do czarnej listy")
                 self.__falseNegative.setPlainText("")
@@ -146,12 +148,12 @@ class MainWindow(QMainWindow):
             :return: None
             """
             timestamp = str(datetime.now().strftime("%Y%m%d%H%M%S"))
-            with open("input" + timestamp + ".txt", "w") as fileInput:
+            with open("input" + timestamp + ".txt", "w", encoding="UTF-8") as fileInput:
                 fileInput.write(self.__input.toPlainText())
             try:
                 os.system(PATH_TO_FILTER + " < input" + timestamp + ".txt > output" + timestamp + ".txt")
                 QMessageBox.information(self, "Filtr wulgaryzmów", "Filtrowanie zakończone pomyślnie.")
-                with open("output" + timestamp + ".txt", "r") as fileOutput:
+                with open("output" + timestamp + ".txt", "r", encoding="UTF-8") as fileOutput:
                     self.__output.setPlainText(fileOutput.read())
             except Exception as e:
                 if DEBUG:
