@@ -24,9 +24,10 @@
 *	Declaration of MaskFactory class.
 *
 *	Provides an effictient method for preliminary checking whether a word could be a profanity or not, by matching the letters the words consist of.
-*	When a word list is modified, a new cache file is created for the class to use. When an instance is initialized, the file is read.
-* 
-*	A mask is a numerical representation of the letters a word consists of. 
+*	When an instance of the class is initialized, it checks whether the cache file that stores the words' masks is recent.
+*	If the file is not recent, the class creates a new cache file by reading the word list and computing the masks for the words.
+*
+*	A mask is a numerical representation of the letters a word consists of.
 *	It's created by setting specific bits in an int to '1', based on indices computed from the given word (e.g. 'a' = LSB, 'z' = 25th bit from LSB).
 */
 
