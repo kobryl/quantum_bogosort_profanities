@@ -1,6 +1,6 @@
-import locale
 import os
 import sys
+from collections.abc import Callable
 from datetime import datetime
 
 from PySide6.QtCore import Slot, Qt
@@ -8,10 +8,8 @@ from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
     QMainWindow, QMessageBox, QWidget
 from unidecode import unidecode
-from collections.abc import Callable
 
 from constants import *
-
 
 
 class MainWindow(QMainWindow):
