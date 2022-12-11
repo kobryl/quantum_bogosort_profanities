@@ -1,8 +1,8 @@
 # quantum_bogosort_profanities
 
 Zadanie eliminacyjne na Hackaton 2023. Program służy do wykrywania słów wulgarnych i zastępowania ich gwiazdkami. Program działa w trybie tekstowym oraz graficznym. Istnieje możliwość dodawania słów do list słów filtrowanych.
-<br/>
-<br/>
+<br>
+<br>
 
 ## :writing_hand: Autorzy 
 
@@ -10,8 +10,7 @@ Zadanie eliminacyjne na Hackaton 2023. Program służy do wykrywania słów wulg
 - Aleksander Czerwionka
 - Michał Krause
 - Łukasz Nowakowski
-<br/>
-<br/>
+<br>
 
 ## :wrench: Tryby działania programu
 
@@ -22,8 +21,8 @@ By otworzyć program w trybie tekstowym, należy uruchomić plik wykonywalny `pr
 ### Tryb graficzny
 
 Aby uruchomić program w trybie graficznym należy uruchomić plik wykonywalny `gui.exe`. Tryb graficzny pozwala na wprowadzanie tekstu do przefiltrowania oraz dodawanie słów do wyjątków i do listy wulgaryzmów - *dodane w ten sposób słowa będą wykrywane tylko z dokładnym dopasowaniem*.
-<br/>
-<br/>
+<br>
+<br>
 
 ## :closed_lock_with_key: Filtrowanie słów
 
@@ -33,7 +32,7 @@ Istnieje możliwość dodania słów, które naszym zdaniem nie powinny być cen
 
     słowo p z
 
-gdzie <br>
+gdzie: <br>
 `p` oznacza liczbę dowolnych znaków dozwolonych przed słowem; <br>
 `z` oznacza liczbę dowolnych znaków dozwolonych za słowem.
 
@@ -43,19 +42,20 @@ Plik `whitelist.txt` musi być zakończony pustą linią.
 
 Opcja pozwalająca dodawać do cenzury słowa, które są dla nas obraźliwe działa podobnie jak dodawanie wyjątków. Na koniec pliku `profanity_list.txt` należy dodać wpis w formacie:
 
-    słowo o p z
-gdzie <br>
-`o` oznacza ;<br>
-`p` oznacza ;<br>
-`z` oznacza .<br>
+    słowo m p z
+
+gdzie: <br>
+`m` oznacza liczbę dowolnych znaków, które mogą się znajdować pomiędzy literami słowa, aby było ono wykryte jako wulgaryzm;<br>
+`p` oznacza liczbę dowolnych znaków umieszczonych przed wulgaryzmem, które będą uzwględnione w przekleństwie;<br>
+`z` oznacza liczbę dowolnych znaków umieszczonych po wulgaryzmie, które będą uwzględnione w przekleństwie.<br>
 
 Plik `profanity_list.txt` musi być zakończony pustą linią.
 
 ### Przywracanie domyślnych list
 
 Domyślne listy znajdują się w katalogu `default_lists/`. Aby przywrócić domyślne działanie programu wystarczy skopiować je do głównego katalogu.
-<br/>
-<br/>
+<br>
+<br>
 
 ## :gear: Użyte technologie
 
