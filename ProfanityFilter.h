@@ -15,7 +15,7 @@ private:
     std::vector<int> allowedCharactersBetweenWordsArray;
     std::vector<std::pair<int, int>> allowedWhitelistCharactersBeforeAndAfterWord;
     std::vector<std::pair<int, int>> allowedProfanityCharactersBeforeAndAfterWord;
-    std::vector<bool> isCensoredArray;
+    std::vector<bool> isCensoredArray, isWhitelistedArray;
     MaskFactory wordMaskFactory;
     int originalIndex;
 

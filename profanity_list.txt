@@ -29,7 +29,6 @@ hwdp 3 100 100
 idiot 0 100 100
 jeb 0 100 100
 jprdl 0 100 100
-kubale 4 100 100
 kurew 5 100 100
 kurw 5 100 100
 kutafon 10 100 100

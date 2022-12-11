@@ -111,6 +111,8 @@ void ProfanityFilter::generatePossibleVariationsOfLetters(std::vector<std::strin
 
     //single characters
     for (int i = 0; i < sourceArray.size(); i++) {
+        if (isWhitelistedArray[i])
+            continue;
         std::vector<std::pair<std::pair<int, int>, char>> possibleLettersInWord;
         for (int j = 0; j < sourceArray[i].size(); j++) {
             char currentCharacterInWord = sourceArray[i][j];
@@ -286,6 +288,12 @@ void ProfanityFilter::censorInputtedText() {
     removeSpecialCharactersAndDigits(sourceArray);
     toLowerCases(sourceArray);
     collapseLetters(sourceArray);
+    for (int i = 0; i < sourceArray.size(); i++) {
+        if (isOnWhitelist(sourceArray[i]))
+            isWhitelistedArray.push_back(true);
+        else
+            isWhitelistedArray.push_back(false);
+    }
     generatePossibleVariationsOfLetters(sourceArray, processedArray);
     loadProfanities();
     loadWhitelist();
@@ -294,8 +302,9 @@ void ProfanityFilter::censorInputtedText() {
         std::string tmp = "";
         bool isCensored = false;
         originalIndex = i;
-        if(!isOnWhitelist(originalData[i]))
-        isCensored = findProfanityInAllPossibleWords(processedArray[i], 0, 0, &tmp);
+        if (!isWhitelistedArray[i]) {
+            isCensored = findProfanityInAllPossibleWords(processedArray[i], 0, 0, &tmp);
+        }
         if (isCensored)
             isCensoredArray.push_back(true);
         else
@@ -329,6 +338,17 @@ void ProfanityFilter::censorInputtedText() {
         }
         if (currentFrontIndex == i)
             continue;
+        if (isWhitelistedArray[i]) {
+            while (currentFrontIndex <= i) {
+                if (!isCensoredArray[currentFrontIndex]) {
+                    isCensoredArray[currentFrontIndex] = true;
+                    skip += sourceArray[currentFrontIndex].size();
+                    currentWordLength -= sourceArray[currentFrontIndex].size();
+                }
+                currentFrontIndex++;
+            }
+            continue;
+        }
         bool isCensored = false;
         if (!isOnWhitelist(currentWordWithSkippedSpaces, skip))
             isCensored = isProfanity(currentWordWithSkippedSpaces, profanitiesArray, skip);
