@@ -203,8 +203,6 @@ bool ProfanityFilter::isProfanity(std::string& potentialProfanityWord, std::vect
         int characterBetweenWord = allowedCharactersBetweenWordsArray[i];
         if (skip != -1) {
             characterBetweenWord = 0;
-            charactersBeforeWord = 0;
-            charactersAfterWord = 0;
         }
         if (!wordMaskFactory.canBeProfanity(i))
             continue;
@@ -311,15 +309,16 @@ void ProfanityFilter::censorInputtedText() {
             isCensoredArray.push_back(false);
     }
     int maxLengthOfWord = 0;
-    for (int i = 0; i < profanitiesArray.size(); i++){
-        maxLengthOfWord = std::max(maxLengthOfWord, (int)profanitiesArray[i].size() * 2);
+    for (int i = 0; i < profanitiesArray.size(); i++) {
+        int charactersBeforeWord = allowedProfanityCharactersBeforeAndAfterWord[i].first;
+        int charactersAfterWord = allowedProfanityCharactersBeforeAndAfterWord[i].second;
+        maxLengthOfWord = std::max(maxLengthOfWord, (int)profanitiesArray[i].size() + charactersBeforeWord + charactersAfterWord);
     }
-
+    std::cout << "Profanities with spaces: \n";
     std::string currentWordWithSkippedSpaces = "";
     int currentFrontIndex = 0, skip = 0, currentWordLength = 0;
     for (int i = 0; i < processedArray.size(); i++) {
-        if(i % 100 == 0)
-            std::cout << "Processed: " << i << " " << currentWordWithSkippedSpaces.size() << " " << skip <<  "\n";
+
         if (isCensoredArray[i]) {
             continue;
         }
@@ -341,7 +340,6 @@ void ProfanityFilter::censorInputtedText() {
         if (isWhitelistedArray[i]) {
             while (currentFrontIndex <= i) {
                 if (!isCensoredArray[currentFrontIndex]) {
-                    isCensoredArray[currentFrontIndex] = true;
                     skip += sourceArray[currentFrontIndex].size();
                     currentWordLength -= sourceArray[currentFrontIndex].size();
                 }
@@ -353,6 +351,14 @@ void ProfanityFilter::censorInputtedText() {
         if (!isOnWhitelist(currentWordWithSkippedSpaces, skip))
             isCensored = isProfanity(currentWordWithSkippedSpaces, profanitiesArray, skip);
         if (isCensored) {
+            while (isProfanity(currentWordWithSkippedSpaces, profanitiesArray, skip)) {
+                skip += sourceArray[currentFrontIndex].size();
+                currentWordLength -= sourceArray[currentFrontIndex].size();
+                currentFrontIndex++;
+            }
+            currentFrontIndex--;
+            skip -= sourceArray[currentFrontIndex].size();
+            currentWordLength += sourceArray[currentFrontIndex].size();
             while (currentFrontIndex <= i) {
                 if (!isCensoredArray[currentFrontIndex]) {
                     isCensoredArray[currentFrontIndex] = true;
