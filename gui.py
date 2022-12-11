@@ -6,7 +6,7 @@ from datetime import datetime
 from PySide6.QtCore import Slot, Qt
 from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import QApplication, QPushButton, QLabel, QPlainTextEdit, \
-    QMainWindow, QMessageBox, QWidget
+    QMainWindow, QMessageBox, QWidget, QLineEdit
 from unidecode import unidecode
 
 from constants import *
@@ -30,8 +30,8 @@ class MainWindow(QMainWindow):
         self.__labelFalseNegative = QLabel(self)
         self.__input = QPlainTextEdit(self)
         self.__output = QPlainTextEdit(self)
-        self.__falsePositive = QPlainTextEdit(self)
-        self.__falseNegative = QPlainTextEdit(self)
+        self.__falsePositive = None
+        self.__falseNegative = None
         self.setFocusPolicy(Qt.StrongFocus)
         self.setWindowTitle("Filtr wulgaryzmów - Quantum Bogosort")
         self.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -89,6 +89,24 @@ class MainWindow(QMainWindow):
             textArea.resize(width, height)
             textArea.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
             textArea.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
+
+        def __lineEditFactory(x: int, y: int, placeholder: str, width: int, height: int) -> QLineEdit:
+            """
+            Creates a line edit with the given position, placeholder and size.
+            :param x: The x coordinate of the line edit in the window.
+            :param y: The y coordinate of the line edit in the window.
+            :param placeholder: Placeholder text.
+            :param width: Width of the line edit.
+            :param height: Height of the line edit.
+            :return: QLineEdit object.
+            """
+            lineEdit = QLineEdit(self)
+            lineEdit.move(x, y)
+            lineEdit.setPlaceholderText(placeholder)
+            lineEdit.resize(width, height)
+            lineEdit.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+            lineEdit.setFocus(Qt.FocusReason.ActiveWindowFocusReason)
+            return lineEdit
 
         def __normalizeText(text: str) -> str:
             """
@@ -206,9 +224,9 @@ class MainWindow(QMainWindow):
         # Text Areas
         __textAreaFactory(self.__input, 5, 40, "Wpisz tekst do przefiltrowania...", TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
         __textAreaFactory(self.__output, 5, 240, "Tekst po przefiltrowaniu...", TEXTAREA_WIDTH, TEXTAREA_HEIGHT)
-        __textAreaFactory(self.__falsePositive, TEXTAREA_WIDTH + 15, 40, "Wpisz nowy wyjątek...",
+        self.__falsePositive = __lineEditFactory(TEXTAREA_WIDTH + 15, 40, "Wpisz nowy wyjątek...",
                           TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
-        __textAreaFactory(self.__falseNegative, TEXTAREA_WIDTH + 15, 150, "Wpisz niewykryty wulgaryzm...",
+        self.__falseNegative = __lineEditFactory(TEXTAREA_WIDTH + 15, 150, "Wpisz niewykryty wulgaryzm...",
                           TEXTINPUT_WIDTH, TEXTINPUT_HEIGHT)
 
         self.__output.setReadOnly(True)
