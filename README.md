@@ -63,4 +63,3 @@ Domyślne listy znajdują się w katalogu `default_lists/`. Aby przywrócić dom
 - C++ 
 - Qt6 (PySide6)
 - Unidecode
-- PyInstaller (do utworzenia pliku gui.exe)
