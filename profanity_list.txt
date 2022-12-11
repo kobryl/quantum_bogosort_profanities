@@ -54,4 +54,3 @@ suka 0 100 100
 suke 0 100 100
 suki 0 100 100
 suko 0 100 100
-kubale 0 1 1
