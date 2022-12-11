@@ -220,7 +220,7 @@ bool ProfanityFilter::containsSubstring(std::vector<std::pair<std::pair<int, int
     int compressedCharacters = 0;
     for (int i = startIndex; i < endIndex; i++) {
         int currentAllowedCharactersBetweenInWord = possibleCharactersBetweenInWord;
-        int idx = i;
+        int idx = 0;
         int checkedWordIt = i + skip;  //checkedWord[checkedWord.size() - 1].first.first + 1 > checkedWord.size() - skip
         while (checkedWordIt < checkedWord.size() && checkedWord[checkedWordIt].first.first - offset < i)
             checkedWordIt++;
