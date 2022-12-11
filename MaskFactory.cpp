@@ -38,10 +38,10 @@ bool MaskFactory::doMasksMatch(int firstMask, int secondMask) {
 // Returns a mask generated from a given word.
 // A mask is a numerical representation of the letters a word consists of. 
 // It's created by setting specific bits in an int to '1', based on indices computed from the given word (e.g. 'a' = LSB, 'z' = 25th bit from LSB).
-int MaskFactory::parseStringToMask(std::string& word) {
+int MaskFactory::parseStringToMask(std::string& word, int skip) {
 	int mask = 0;
 	int letterNumber;
-	for (int i = 0; i < word.length(); i++) {
+	for (int i = skip; i < word.length(); i++) {
 		if (word[i] < 'a' || word[i] > 'z')
 			continue;
 		letterNumber = word[i] - 'a';
@@ -118,8 +118,8 @@ bool MaskFactory::isCacheFileRecent(const char* cacheName, const char* listName)
 
 
 // Sets the currentWordMask variable to a mask of the given word. Used in canBeProfanity/Whitelisted to increase performance.
-void MaskFactory::setCurrentWordMask(std::string& word) {
-	currentWordMask = parseStringToMask(word);
+void MaskFactory::setCurrentWordMask(std::string& word, int skip) {
+	currentWordMask = parseStringToMask(word, skip);
 }
 
 

@@ -35,7 +35,7 @@ private:
 
     bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip = -1);
 
-    bool isOnWhitelist(std::string& potentialProfanityWord);
+    bool isOnWhitelist(std::string& potentialProfanityWord, int skip = 0);
 
     bool findProfanityInAllPossibleWords(std::vector<std::pair<std::pair<int, int>, char>>& inputArray,
         int index, int arrayLocationIndex, std::string* currentWord);

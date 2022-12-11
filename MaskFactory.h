@@ -38,7 +38,7 @@ private:
 	bool doMasksMatch(int firstMask, int secondMask);
 
 	// Returns a mask generated from a given word.
-	int parseStringToMask(std::string& word);
+	int parseStringToMask(std::string& word, int skip = 0);
 
 	// Reads the given list's cache file and inserts masks into the given mask list.
 	void readMaskCacheFile(const char* cacheName, std::vector<int>* masks);
@@ -52,8 +52,6 @@ private:
 	// Checks if the given list's cache file is recent. Returns true or false depending on the outcome.
 	bool isCacheFileRecent(const char* cacheName, const char* listName);
 
-	// Sets the currentWordMask variable to a mask of the given word. Used in canBeProfanity/Whitelisted to increase performance.
-	void setCurrentWordMask(std::string& word);
 
 public:
 	// Default constructor: initializes masks vector.
@@ -65,7 +63,8 @@ public:
 	// Checks if the word's mask set in currentWordMask could be whitelisted based on it's mask. Returns true or false depending on the outcome.
 	bool canBeWhitelisted(int whitelistIndex);
 
-
+	// Sets the currentWordMask variable to a mask of the given word. Used in canBeProfanity/Whitelisted to increase performance.
+	void setCurrentWordMask(std::string& word, int skip = 0);
 	// Debug functions
 
 	// Returns a pointer to a vector of all of the masks.
