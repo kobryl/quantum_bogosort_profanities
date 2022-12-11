@@ -134,7 +134,7 @@ private:
      * @param skip The number of characters to skip when checking for the `substringWord` in the `checkedWord`.
      * @returns `true` if the `checkedWord` contains the `substringWord`, `false` otherwise.
      */
-    bool containsSubstring(std::string& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord,
+    bool containsSubstring(std::vector<std::pair<std::pair<int, int>, char>>& checkedWord, std::string& substringWord, int possibleCharactersBetweenInWord,
         int allowedCharactersInFront, int allowedCharactersInBack, int skip = 0);
 
     /**
@@ -146,7 +146,7 @@ private:
      * @param skip The number of characters to skip when checking for the `potentialProfanityWord` in the `profanitiesArray`.
      * @returns `true` if the `potentialProfanityWord` is a profanity, `false` otherwise.
      */
-    bool isProfanity(std::string& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip = -1);
+    bool isProfanity(std::vector<std::pair<std::pair<int, int>, char>>& potentialProfanityWord, std::vector<std::string>& profanitiesArray, int skip = -1);
 
     /**
      * Determines if the given `potentialProfanityWord` is on the whitelist, taking into account the number of characters
@@ -156,7 +156,7 @@ private:
      * @param skip The number of characters to skip when checking for the `potentialProfanityWord` in the whitelist.
      * @returns `true` if the `potentialProfanityWord` is on the whitelist, `false` otherwise.
      */
-    bool isOnWhitelist(std::string& potentialProfanityWord, int skip = 0);
+    bool isOnWhitelist(std::vector<std::pair<std::pair<int, int>, char>>& potentialProfanityWord, int skip = 0);
 
     /**
      * Determines if the given `inputArray` contains any profanity, by checking all possible words that are possible to generate
@@ -181,6 +181,9 @@ private:
      * Loads the whitelist from a file.
      */
     void loadWhitelist();
+
+    bool isGivenCharacterPossibleVariation(std::vector<std::pair<std::pair<int, int>, char>>& checkedWord, int characterIndex, int startIndex, char character);
+
 public:
     /**
      * An array containing the censored version of the inputted text after using censorInputtedText() method.

@@ -55,7 +55,7 @@ bool MaskFactory::doMasksMatch(int firstMask, int secondMask) {
 *	@param skip (optional): The number of elements in the word to skip before generating the mask. Defaults to 0.
 *	@returns An integer representing the generated mask.
 */
-int MaskFactory::parseStringToMask(std::string& word, int skip = 0) {
+int MaskFactory::parseStringToMask(std::string& word, int skip) {
 	int mask = 0;
 	int letterNumber;
 	for (int i = skip; i < word.length(); i++) {
@@ -77,7 +77,7 @@ int MaskFactory::parseStringToMask(std::string& word, int skip = 0) {
 *	@param skip (optional): The number of elements in the word to skip before generating the mask. Defaults to 0.
 *	@returns An integer representing the generated mask.
 */
-int MaskFactory::parseProcessedWordToMask(std::vector<std::pair<std::pair<int, int>, char>>& word, int skip = 0) {
+int MaskFactory::parseProcessedWordToMask(std::vector<std::pair<std::pair<int, int>, char>>& word, int skip) {
 	int mask = 0;
 	int letterNumber;
 	for (int i = skip; i < word.size(); i++) {
@@ -188,7 +188,7 @@ bool MaskFactory::isCacheFileRecent(const char* cacheName, const char* listName)
 *	@param word: A reference to a vector representing the processed word.
 *	@param skip (optional): The number of elements in the word to skip before generating the mask. Defaults to 0.
 */
-void MaskFactory::setCurrentWordMask(std::vector<std::pair<std::pair<int, int>, char>>& word, int skip = 0) {
+void MaskFactory::setCurrentWordMask(std::vector<std::pair<std::pair<int, int>, char>>& word, int skip) {
 	currentWordMask = parseProcessedWordToMask(word, skip);
 }
 
