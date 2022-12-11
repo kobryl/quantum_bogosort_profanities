@@ -27,5 +27,5 @@ ABOUT_TEXT_HEIGHT = ABOUT_WIDGET_HEIGHT - 2 * WIDGET_MARGIN
 PATH_TO_FILTER = "Debug\profanities.exe" if DEBUG else "profanities.exe"
 PATH_TO_WHITELIST = "./whitelist_debug.txt" if DEBUG else "./whitelist.txt"
 PATH_TO_PROFANITIES = "./profanity_list_debug.txt" if DEBUG else "./profanity_list.txt"
-PATH_TO_HELP = "help.txt"
-PATH_TO_ABOUT = "about.txt"
+PATH_TO_HELP = "docs/help.txt"
+PATH_TO_ABOUT = "docs/about.txt"
